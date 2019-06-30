@@ -16,10 +16,11 @@ Welcome to chendq-thesis-ZH's documentation!
 .. toctree::
 
    :maxdepth: 2
-   introduction/hello
    introduction/Preface
    introduction/Abstract
    introduction/Acknowledge
+   introduction/Chapter1
+   part1/Chapter2
 
 
 Indices and tables
