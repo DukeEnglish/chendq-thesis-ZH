@@ -31,7 +31,7 @@ Figure1.1: A sample story and comprehension questions from the MCTEST dataset
 
 阅读理解这个领域有着悠久的历史——早在20世纪70年代，研究者就已经认识到它是测试计算机程序语言理解能力的重要方法（Lehnert， 1977）。然而，这个领域已经被忽视了几十年。直到最近，它才得到了大量的关注，并取得了快速的进展（参见Figure 1.2作为一个例子），包括我们将在本文中详细介绍的我们付出的努力。最近阅读理解的成功可以归因于两个原因：1）以（文章、问题、答案）三元组的形式的大规模监督数据集创建；2）神经阅读理解模型的建立。
 
-![image-20190630114952839](/Users/ljy/Library/Application Support/typora-user-images/image-20190630114952839.png)
+![F1.2](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png)
 
 Figure 1.2: A search result on GOOGLE. It not only returns a list of search documents but gives more precise answers within the documents. 
 
@@ -55,7 +55,7 @@ Figure 1.2: A search result on GOOGLE. It not only returns a list of search docu
 
 【译者注： excruciatingly： 难以忍受地； allegedly：据说】
 
-![image-20190630115625137](/Users/ljy/Library/Application Support/typora-user-images/image-20190630115625137.png)
+![F1.3](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png)
 
 Figure1.3: AconversationfromCOQAbasedonanCNNarticle. 
 
