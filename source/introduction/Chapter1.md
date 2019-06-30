@@ -12,7 +12,7 @@
 
 4. 指代消解。此外，我们的机器甚至需要理解句子之间的关系。例如，She 's now in Miami这句话中提到的She指的是第一句中提到的Alyssa，而提到的The girls指的是前面句子中提到的Alyssa、Ellen、Kristen和Rachel。
 
-   ![Figure1.1: AsamplestoryandcomprehensionquestionsfromtheMCTESTdataset ](/Users/ljy/Library/Application Support/typora-user-images/image-20190630112958669.png)
+   ![Figure1.1: AsamplestoryandcomprehensionquestionsfromtheMCTESTdataset ](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.1.png)
 
 Figure1.1: A sample story and comprehension questions from the MCTEST dataset
 （Richardson et al., 2013）.
