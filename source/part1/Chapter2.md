@@ -6,6 +6,8 @@ PART I Neural Reading Comprehension: Foundations
 
 *When a person understands a story， he can demonstrate his understanding by answering questions about the story. Since questions can be devised to query any aspect of text comprehension， the ability to answer questions is the strongest possible demonstration of understanding. If a computer is said to understand a story， we must demand of the computer the same demonstration of understanding that we require of people. Until such demands are met， we have no way of evaluating text understanding programs.* 
 
+*(当一个人理解一个故事的时候，他可以通过回答关于这个故事的问题来表明他的理解（程度）。因为问题可以提问文本理解的任何方面，那么回答问题的能力就是对理解程度的最可能的表示。如果说一台电脑理解了一个故事，我们必须像要求人类一样要求电脑。在这样的要求满足之前，我们无法衡量任何文本理解系统。)*
+
 *Wendy Lehnert， 1977* 
 
 
@@ -16,23 +18,27 @@ PART I Neural Reading Comprehension: Foundations
 
 接下来我们简要讨论一下阅读理解和问答（QA）的区别，特别是它们的最终目标（2.3节）。最后，我们会在2.4节中讨论大规模数据集和神经模型的相互作用是如何促进现代阅读理解的发展的。
 
-2.1 History
+## 2.1 History
 
-2.1.1 Early Systems
+### 2.1.1 Early Systems
 
-建立自动阅读理解系统的历史可以追溯到四十多年前。在20世纪70年代，研究人员已经认识到阅读理解作为一种方法来测试计算机程序对语言的理解能力的重要性。
+建立自动阅读理解系统的历史可以追溯到四十多年前。在20世纪70年代，研究人员已经认识到把阅读理解作为一种方法来测试计算机程序对语言的理解能力的重要性。
 
-最著名的早期作品之一是Lehnert（1977）中详细描述的QUALM。基于脚本和计划框架，Lehnert（1977）设计了一个问答的理论，并且专注于语用问题和故事上下文在问答中的重要性，来作为对人类阅读理解的建模（Schank and Abelson， 1977）。这个早期工作为语言理解设置了一个强大的远景，但是当时构建的实际系统非常小，并且仅限于手工编码的脚本，并且很难推广到更广泛的领域。
+最著名的早期作品之一是Lehnert（1977）中详细描述的QUALM。基于脚本和计划框架，Lehnert（1977）设计了一个问答的理论，并且专注于语用问题和故事上下文在问答中的重要性，来作为对人类阅读理解的建模（Schank and Abelson， 1977）。这个早期工作为语言理解设置了一个强大的愿景，但是当时构建的实际系统非常小，仅限于手工编码的脚本，并且很难推广到更广泛的领域。
 
 由于问题的复杂性，这方面的研究在20世纪80年代和90年代大多被忽视。在20世纪90年代末，人们对阅读理解的兴趣有了一些小小的复苏，例如Hirschman等人（1999）创建了一个阅读理解数据集，以及随后在ANLP/NAACL 2000年举办了一个关于阅读理解测试作为基于计算机的理解系统评估的研讨会。数据集包括60个用于开发的故事和60个用于测试的三至六年级的故事，附有一些简单的who，what，when，where，why这样的简单问题。它只需要系统返回包含正确答案的句子。这一阶段开发的系统主要是基于规则的词包方法。例如DEEP READ 系统（Hirschman et al. 1999）中进行词干分析、语义类识别和代词解析等浅层语言处理，或者像是QUARC系统（Riloff and THElen，2000）中手动生成基于词汇和语义对应的规则或者是以上两个的组合体（Charnizak et al.， 2000）。这些系统在检索正确句子时达到了30%-40%的准确率。
 
-2.1.2 Machine Learning Approaches
+### 2.1.2 Machine Learning Approaches
 
 在2013年至2015年之间，（人们）在将阅读理解定义为一种supervised learning问题方面做出了显著的努力。研究员以（文章，问题，回答）三元组的形式收集人类标注好的训练例子，希望我们可以训练统计模型来学习将一段话和问题形成的对映射到他们相对应的答案上面去：f（passage， question）-->answer。
 
-在此期间，两个值得注意的数据集是MCTEST （Richardson et al.， 2013）和PROCESSBANK （Berant et al.， 2014）。MCTEST收集660个虚构的故事，每个故事有4个多选题（每个问题有4个假设答案，其中一个是正确的）（表2.1 （b））。PROCESSBANK旨在回答描述生物过程的段落中的二选择问题，并要求理解过程中实体和事件之间的关系。数据集由585个问题组成，分布在200段中。
+在此期间，两个值得注意的数据集是MCTEST （Richardson et al.， 2013）和PROCESSBANK （Berant et al.， 2014）。MCTEST收集660个虚构的故事，每个故事有4个多选题（每个问题有4个假设答案，其中一个是正确的）（Table 2.1 （b））。PROCESSBANK旨在回答描述生物过程的段落中的二选择问题，并要求理解过程中实体和事件之间的关系。数据集由585个问题组成，分布在200段中。
 
 在最初的MCTEST paper中，Richardson等人（2013）在没有利用任何训练数据的情况下，提出了几个基于规则的基线（baseline）。一种是启发式滑动窗口方法，它测量问题、答案和滑动窗口中单词之间的加权单词重叠/距离信息；另一种方法是通过将每个问答对转换为一个语句来运行现成的文本蕴涵系统。这个数据集后来启发了一系列机器学习模型（Sachan et al.， 2015；Narasimhan和Barzilay， 2015；Wang et al.， 2015）。这些模型大多建立在一个简单的max-margin学习框架之上，该框架具有丰富的手工设计的语言特性，包括句法依赖、语义框架、指代消解、篇章关系和单词嵌入。MC500的性能从63%略微提高到70%左右。在PROCESSBANK数据集上，Berant等人（2014）提出了一种统计模型，该模型首先学会预测流程结构，然后将问题映射到可以针对该结构执行的正式查询。同样，模型结合了大量的手工特征，最终在二分类任务上获得了66.7%的准确率。
+
+![image-20190703075018343](/Users/ljy/Library/Application Support/typora-user-images/image-20190703075018343.png)
+
+![image-20190703075040391](/Users/ljy/Library/Application Support/typora-user-images/image-20190703075040391.png)
 
 Table 2.1： A few examples from representative reading comprehension datasets： （a） CNN/DAILY MAIL （Hermann et al.， 2015）， （b） MCTEST （Richardson et al.， 2013）， （c） SQUAD （Rajpurkar et al.， 2016） and （d） NARRATIVEQA （Kocˇisky` et al.， 2018）. 
 
@@ -40,48 +46,50 @@ Table 2.1： A few examples from representative reading comprehension datasets�
 
 与早期基于规则的启发式方法相比，这些机器学习模型取得了一定的进步。然而，它们的改进仍然相当有限，其缺点总结如下：
 
-l   这些模型严重依赖于现有的语言工具，如依赖依存解析和语义角色标记（SRL）系统。然而，这些语言表示任务还远远没有解决，现成的工具通常是从单个领域（的文章）（例如，newswire文章）训练而来，在实际使用中存在泛化问题。因此，利用现有的语言注释作为特性有时会在这些基于特性的机器学习模型中增加噪音，而对于更高级别的注释（例如，篇章关系与词性标记），情况会变得更糟。
+1. 这些模型严重依赖于现有的语言工具，如依赖依存解析和语义角色标记（SRL）系统。然而，这些语言表示任务还远远没有解决，现成的工具通常是从单个领域（的文章）（例如，newswire文章）训练而来，在实际使用中存在泛化问题。因此，利用现有的语言注释作为特性有时会在这些基于特性的机器学习模型中增加噪音，而更高级别的注释（例如，篇章关系与词性标记），会让情况变得更糟糕。
+2. 模拟人类水平的理解是一个难以捉摸的挑战，而且总是很难从当前的语言表征中构建有效的特征。例如，对于图1.1中的第三个问题：How many friends does Alyssa have in this story？，当证据散布在整个文章中，基本不可能构建出一个有效特征的。
+3. 尽管我们可以从人类标记的阅读理解示例中训练模型，这确实激励人心，但这些数据集仍然太小，无法支持表达性统计模型。例如，用于训练依存解析器的English Penn Treebank数据集包含39，832个示例，而在MCTEST中，用于训练的示例仅为1480个——更不用说阅读理解了，作为一项综合性的语言理解任务，阅读理解更加复杂，并且需要不同的推理能力。
 
-l   模拟人类水平的理解是一个难以捉摸的挑战，而且总是很难从当前的语言表征中构建有效的特征。例如，对于图1.1中的第三个问题：How many friends does Alyssa have in this story？，当证据散布在整个文章中，是不可能构建出一个有效特征的。
+### 2.1.3 A Resurgence： The Deep Learning Era
 
-l   尽管我们可以从人类标记的阅读理解示例中训练模型，这确实激励人心，但这些数据集仍然太小，无法支持表达性统计模型。例如，用于训练依存解析器的English Penn Treebank数据集包含39，832个示例，而在MCTEST中，用于训练的示例仅为1，480个—更不用说阅读理解了，作为一项综合性的语言理解任务，阅读理解更加复杂，并且需要不同的推理能力。
+这个领域的转折点出现在2015年。DeepMind研究人员Hermann等人（2015）提出了一种新颖而廉价的方案，用于为学习阅读理解模型创建大规模监督训练数据。他们还提出了一个神经网络模型——一个基于attention机制的LSTM模型，命名为THE ATTENTIVE READER——并证明它在很大程度上优于符号NLP方法。在实验中，在CNN数据集中，THE ATTENTIVE READER获得63.8%的准确率，而符号NLP系统最多获得50.9%的准确率。**数据创建**的思想如下：CNN和《每日邮报》附有一些要点，总结了文章中所包含的信息。他们将一篇新闻文章作为passage，通过使用一个placeholder 来替换一个实体（entity）的方式将其中的一个要点转换为一个完形填空式的问题，而答案就是这个被替换的实体。为了确保这个系统需要真正的理解文章来完成这个任务，而不是使用世界知识（译者，知识库，即符号系统）或者语言模型来回答问题，他们运行了实体识别和指代消解系统，并且将所有在指代链中提到的每个实体替换为一个抽象的实体标记（例如：@entity6，可以在Table2.1（a）中看到例子）。最后，他们几乎没有任何成本地收集了近100万个数据示例。
 
-2.1.3 A Resurgence： The Deep Learning Era
+【译者：Obviously，研究怎么生成训练集也是一门学问。但我一直很好奇，致力于研究数据集来促进模型的发展，是不是就像是致力于研究更好的教材来让学生学习的更好一个道理。。。】
 
-这个领域的转折点出现在2015年。DeepMind研究人员Hermann等人（2015）提出了一种新颖而廉价的方案，用于为学习阅读理解模型创建大规模监督训练数据。他们还提出了一个神经网络模型——一个基于attention机制的LSTM模型，命名为THE ATTENTIVE READER——并证明它在很大程度上优于符号NLP方法。在实验中，在CNN数据集中，THE ATTENTIVE READER获得63.8%的准确率，而符号NLP系统最多获得50.9%的准确率。数据创建的思想如下：CNN和《每日邮报》附有一些要点，总结了文章中所包含的信息。他们将一篇新闻文章作为passage，通过使用一个placeholder 来替换一个实体（entity）的方式将其中的一个要点转换为一个完形填空式的问题，而答案就是这个被替换的实体。为了确保这个系统需要真正的理解文章来完成这个任务，而不是使用世界知识（译者，我理解就是知识库）或者语言模型来回答问题，他们运行了实体识别和指代消解系统，并且将所有在指代链中提到的每个实体替换为一个抽象的实体标记（例如：@entity6，可以在Table2.1（a）中看到例子）。最后，他们几乎没有任何成本地收集了近100万个数据示例。
+更进一步，我们的工作（Chen et al.， 2016）研究了这个有史以来第一个大型的阅读理解数据集，并证明了一个简单、精心设计的神经网络模型（第3.2节）能够将CNN数据集的性能提升到72.4%，这是另一个8.6%的绝对提升。更重要的是，与传统的基于特征的分类器相比，神经网络模型能够更好地识别词汇匹配和其释义。然而，尽管这个半合成的数据集为训练有效的统计模型提供了一个理想的方法，但我们的结论是，由于数据的创建方法和指代误差，该数据集似乎是有噪声的，并且对于进一步的推动相关进展的帮助是有限的。
 
-更进一步，我们的工作（Chen et al.， 2016）研究了这个有史以来第一个大型的阅读理解数据集，并证明了一个简单、精心设计的神经网络模型（第3.2节）能够将CNN数据集的性能提升到72.4%，这是另一个8.6%的绝对提升。更重要的是，与传统的基于特征的分类器相比，神经网络模型能够更好地识别词汇匹配和其释义。然而，尽管这个半合成的数据集为训练有效的统计模型提供了一个理想的方法，但我们的结论是，由于数据的创建方法和指代误差，该数据集似乎是有噪声的，并且对于进一步推动进展是有限的。
-
-为了解决这些限制，Rajpurkar等人（2016）收集了一个名为STANFORD QUESTION ANSWER DATASET（SQUAD）的新数据集。数据集包含了536篇维基百科文章中的107，785对问答对，这些问题都是由群体工作者提出的，每个问题的答案对应相应的文章中的一段文本 （表2.1 （c））。SQUAD是第一个具有自然问题的大规模阅读理解数据集。由于其高质量和可靠的自动评估，该数据集引起了NLP社区的极大兴趣，并成为该领域的中心基准。这反过来启发了一系列新的阅读理解模型（Wang and Jiang， 2017； Seo et al.， 2017； Chen et al.， 2017； Wang et al.， 2017； Yu et al.， 2018） 并且研究的进展十分迅速，截至2018年10月，表现最好的单一的系统实现了91.8%的F1得分（Devlin et al .， 2018），而这个已经超过91.2%，我们预期的人类表现，而最初的作者在2016年构建的基于特征的分类器只获得了51.0%的F1值如图2.1所示。
+为了解决这些限制，Rajpurkar等人（2016）收集了一个名为STANFORD QUESTION ANSWER DATASET（SQUAD）的新数据集。数据集包含了536篇维基百科文章中的107，785对问答对，这些问题都是由群体工作者提出的，每个问题的答案对应相应的文章中的一段文本 （表2.1 （c））。SQUAD是第一个具有自然问题的大规模阅读理解数据集。由于其高质量和可靠的自动评估，该数据集引起了NLP社区的极大兴趣，并成为该领域的中心基准。这反过来启发了一系列新的阅读理解模型（Wang and Jiang， 2017； Seo et al.， 2017； Chen et al.， 2017； Wang et al.， 2017； Yu et al.， 2018） 并且研究的进展十分迅速，截至2018年10月，表现最好的单一的系统实现了91.8%的F1得分（Devlin et al .， 2018），而这个已经超过91.2%，我们预期的人类表现，而最初的作者在2016年构建的基于特征的分类器只获得了51.0%的F1值，如图2.1所示。
 
 目前所有在SQUAD上面表现最好的系统都是建立在端到端神经网络或深度学习模型上的（end-to-end neural networks， or deep learning models）。这些模型往往会先从将文章和问题中的每一个单词表示为一个稠密向量开始（例如，300维）。经过几次建模或者交互层，最后进行预测。所有的参数可以使用梯度下降算法或者它的变种一起进行优化。这一类模型可以被称为神经阅读理解（neural reading comprehension），我们将会在第三章详细的阐述他。不同于基于特征的分类起，神经阅读理解模型有几个优点。
 
-l   他们不依赖于任何下游的语言学特征（比如，依存分析或者指代消解），并且所有的特征是在一个统一的端到端的的框架中独立学习来的。这避免了语言学标注的噪音，并且也在可用的特征空间中提供了更好的了灵活性。
+- 他们不依赖于任何下游的语言学特征（比如，依存分析或者指代消解），并且所有的特征是在一个统一的端到端的的框架中独立学习来的。这避免了语言学标注的噪音，并且也在可用的特征空间中提供了更好的了灵活性。
 
-l   传统的符号NLP系统受困于一个严重的问题：特征通常非常稀疏，并且泛化性非常差。例如，为了回答一个问题：
+- 传统的符号NLP系统受困于一个严重的问题：特征通常非常稀疏，并且泛化性非常差。例如，为了回答一个问题：
 
-\- How many individual libraries make up the main school library？
+  \- How many individual libraries make up the main school library？
 
-而文章中的相关内容如下
+  而文章中的相关内容如下
 
-"... Harvard Library， which is the world's largest academic and private library system， comprsing 79 individual libraries with over 18 million volumes"
+  "... Harvard Library， which is the world's largest academic and private library system， comprsing 79 individual libraries with over 18 million volumes"
 
-所以一个系统必须基于标记好的特征来学习comprising与make up的一致性，例如下面的特征：
+  所以一个系统必须基于标记好的特征来学习comprising与make up的一致性，例如下面的特征：
+  $$
+  pw_i = comprising ∧ qw_j = make ∧ qw_{j+1} = up. 
+  $$
+  pwi = comprising ∧ qwj = make ∧ qwj+1 = up. 
 
-∧qwj = make∧qwj+1 = up。
+  ∧qwj = make∧qwj+1 = up。
 
-这里并没有足够的数据来给这些特征赋予正确的权重。这在所有的非神经NLP模型中是一个共有的问题。利用低维，稠密的词向量共享相似词语之间在统计上的强度，可以有效的缓解稀疏性。
+  这里并没有足够的数据来给这些特征赋予正确的权重。这在所有的非神经NLP模型中是一个共有的问题。利用低维，稠密的词向量共享相似词语之间在统计上的强度，可以有效的缓解稀疏性。
 
-l   这些模型从从构建大量手工特征的劳动中解脱出来。因此，神经模型在概念上更简单，（研究）重点可以转移到神经结构的设计（译者注：可以从构建手工特征中解放，转而研究神经网络结构）。由于现代深度学习框架如TENSORFLOW和PYTORCH的发展，已经取得了很大的进步，现在开发新的模型又快又容易。
+- 这些模型从从构建大量手工特征的劳动中解脱出来。因此，神经模型在概念上更简单，（研究）重点可以转移到神经结构的设计（译者注：可以从构建手工特征中解放，转而研究神经网络结构）。由于现代深度学习框架如TENSORFLOW和PYTORCH的发展，已经取得了很大的进步，现在开发新的模型又快又容易。
 
-毫无疑问，在SQUAD上面达到人类表现程度是不可思议，并且可以说是我们在过去几年在NLP社区中看到的最大成果之一。然而，解决SQUAD任务并不能等于解决机器阅读理解。我们需要承认SQUAD是受限制的。因为问题必须用文章中的一段文本来回答，而且大多数SQUAD的例子相对非常简单，并且不需要复杂的推理。
+毫无疑问，在SQUAD上面达到人类表现程度是不可思议，并且可以说是我们在过去几年在NLP社区中看到的最大成果之一。然而，解决SQUAD任务并不能等于解决机器阅读理解。我们需要承认SQUAD是有限的。因为问题必须用文章中的一段文本来回答，而且大多数SQUAD的例子相对非常简单，并且不需要复杂的推理。
 
-这个领域还在进一步发展。围绕着创建大规模、更具挑战性的阅读理解数据集这一主题，近年来出现了大量的数据集：TRIVIAQA （Joshi et al.， 2017）， RACE （Lai et al.， 2017）， QANGAROO （Welbl et al.， 2018）， NARRATIVEQA （Kocˇisky` et al.， 2018）， MULTIRC （Khashabi et al.， 2018）， SQuAD 2.0 （Rajpurkar et al.， 2018）， HOTPOTQA （Yang et al.， 2018）等。这些数据从各种来源收集（Wikipedia， newswire articles， fictional stories or other Web resources），并且以不同的方式构建。他们的目的是应对许多之前没有被解决的挑战：独立于段落的问题，需要多个句子甚至多个文档来回答的问题，基于长文档（比如一本书）的问题，或者不能从段落中回答的问题。在撰写本文时，这些数据集大多还没有得到解决，并且在最先进的方法和人类的性能水平之间仍然存在很大的差距。阅读理解已成为当今自然语言处理中最活跃的领域之一，仍有许多待解决的问题。我们将在4.2节中更详细地讨论阅读理解数据集的最新发展。
+这个领域还在进一步发展。围绕着创建大规模、更具挑战性的阅读理解数据集这一主题，近年来出现了大量的数据集：TRIVIAQA （Joshi et al.， 2017）， RACE （Lai et al.， 2017）， QANGAROO （Welbl et al.， 2018）， NARRATIVEQA （Kocˇisky` et al.， 2018）， MULTIRC （Khashabi et al.， 2018）， SQuAD 2.0 （Rajpurkar et al.， 2018）， HOTPOTQA （Yang et al.， 2018）等。这些数据从各种来源收集（Wikipedia， newswire articles， fictional stories or other Web resources），并且以不同的方式构建。他们的目的是应对许多之前没有被解决的挑战：独立于段落的问题，需要多个句子甚至多个文档来回答的问题，基于长文档（比如一本书）的问题，或者不能从段落中回答的问题。在撰写本文时，这些数据集大多还没有得到解决，并且最先进的方法和人类的水平之间仍然存在很大的差距。阅读理解已成为当今自然语言处理中最活跃的领域之一，仍有许多待解决的问题。我们将在4.2节中更详细地讨论阅读理解数据集的最新发展。
 
 
- 
 
- 
 
 ## 2.2 Task Definition
 
@@ -119,9 +127,9 @@ l   自由形式回答类型（Free-form answer）：最后一种类型允许答
  
 
 
- 
 
- 
+
+
 
 ### 2.2.2 Evaluation
 
@@ -144,9 +152,9 @@ Rajpurkar等人（2016）（提出评估指标之后）之后，在评估中所�
 最后，对于自由形式的回答阅读理解任务，目前还没有最理想的评价标准。一种常见的方法是使用在自然语言生成（NLG）任务中使用的标准评估指标，如机器翻译或摘要，包括BLEU （Papineni et al.， 2002）、Meteor （Banerjee和Lavie， 2005）和ROUGE （Lin， 2004）。
 
 
- 
 
- 
+
+
 
 ## 2.3 Reading Comprehension vs. Question Answering
 
