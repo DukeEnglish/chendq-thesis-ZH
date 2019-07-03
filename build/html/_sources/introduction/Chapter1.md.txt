@@ -12,7 +12,7 @@
 
 4. 指代消解。此外，我们的机器甚至需要理解句子之间的关系。例如，She 's now in Miami这句话中提到的She指的是第一句中提到的Alyssa，而提到的The girls指的是前面句子中提到的Alyssa、Ellen、Kristen和Rachel。
 
-   ![Figure1.1: AsamplestoryandcomprehensionquestionsfromtheMCTESTdataset ](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.1.png)
+![F1.1.png](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.1.png?raw=true)
 
 Figure1.1: A sample story and comprehension questions from the MCTEST dataset
 （Richardson et al., 2013）.
@@ -31,7 +31,7 @@ Figure1.1: A sample story and comprehension questions from the MCTEST dataset
 
 阅读理解这个领域有着悠久的历史——早在20世纪70年代，研究者就已经认识到它是测试计算机程序语言理解能力的重要方法（Lehnert， 1977）。然而，这个领域已经被忽视了几十年。直到最近，它才得到了大量的关注，并取得了快速的进展（参见Figure 1.2作为一个例子），包括我们将在本文中详细介绍的我们付出的努力。最近阅读理解的成功可以归因于两个原因：1）以（文章、问题、答案）三元组的形式的大规模监督数据集创建；2）神经阅读理解模型的建立。
 
-![F1.2](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png)
+![F1.2.png](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png?raw=true)
 
 Figure 1.2: A search result on GOOGLE. It not only returns a list of search documents but gives more precise answers within the documents. 
 
@@ -55,7 +55,7 @@ Figure 1.2: A search result on GOOGLE. It not only returns a list of search docu
 
 【译者注： excruciatingly： 难以忍受地； allegedly：据说】
 
-![F1.3](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png)
+![F1.3.png](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.3.png?raw=true)
 
 Figure1.3: AconversationfromCOQAbasedonanCNNarticle. 
 

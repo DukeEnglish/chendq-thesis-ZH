@@ -161,17 +161,13 @@
 <div class="section" id="motivation">
 <h2>1.1  Motivation<a class="headerlink" href="#motivation" title="永久链接至标题">¶</a></h2>
 <p>教机器理解人类语言文档是人工智能领域最难以捉摸和长期存在的挑战之一。在我们继续往下读之前，我们必须搞清楚，理解人类语言意味着什么？图1.1展示了MCTEST数据集中的一个儿童故事（Richardson et al.，2013），这个故事仅仅使用了简单的词汇和语法。为了处理这样一段文本，NLP社区花了几十年的时间来解决文本理解各个方面的不同任务，包括:</p>
-<ol>
-<li><p class="first">词性标注（part-of-speech tagging）。这需要我们的机器理解文本中的单词词性。例如，第一句话中Alyssa got to the beach after a long trip。其中Alyssa是一个专有名词（proper noun），beach和trip是常见名词（common noun），got是动词的过去式（verb in its past tense），long是形容词（adjective），after是介词（preposition）。</p>
-</li>
-<li><p class="first">命名实体识别（named entity recognition）。我们的机器也应该明白，故事中是Alyssa、Ellen、Kristen人物的名字，而Charlotte、Atlanta和Miami是地点的名字。</p>
-</li>
-<li><p class="first">语法解析（syntactic parsing）。为了理解每个句子的意思，我们的机器还需要理解单词之间的关系，或者语法（grammatical）结构。还是用故事中的第一句话举例：Alyssa got to the beach after a long trip，，机器应该理解Alyssa是主语，beach是动词got的宾语，而after a long trip作为一个整体是一个介词短语，它描述了动词与时间的关系。</p>
-</li>
-<li><p class="first">指代消解。此外，我们的机器甚至需要理解句子之间的关系。例如，She ‘s now in Miami这句话中提到的She指的是第一句中提到的Alyssa，而提到的The girls指的是前面句子中提到的Alyssa、Ellen、Kristen和Rachel。</p>
-<p><img alt="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.1.png" src="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.1.png" />Figure1.1: AsamplestoryandcomprehensionquestionsfromtheMCTESTdataset </p>
-</li>
+<ol class="simple">
+<li>词性标注（part-of-speech tagging）。这需要我们的机器理解文本中的单词词性。例如，第一句话中Alyssa got to the beach after a long trip。其中Alyssa是一个专有名词（proper noun），beach和trip是常见名词（common noun），got是动词的过去式（verb in its past tense），long是形容词（adjective），after是介词（preposition）。</li>
+<li>命名实体识别（named entity recognition）。我们的机器也应该明白，故事中是Alyssa、Ellen、Kristen人物的名字，而Charlotte、Atlanta和Miami是地点的名字。</li>
+<li>语法解析（syntactic parsing）。为了理解每个句子的意思，我们的机器还需要理解单词之间的关系，或者语法（grammatical）结构。还是用故事中的第一句话举例：Alyssa got to the beach after a long trip，，机器应该理解Alyssa是主语，beach是动词got的宾语，而after a long trip作为一个整体是一个介词短语，它描述了动词与时间的关系。</li>
+<li>指代消解。此外，我们的机器甚至需要理解句子之间的关系。例如，She ‘s now in Miami这句话中提到的She指的是第一句中提到的Alyssa，而提到的The girls指的是前面句子中提到的Alyssa、Ellen、Kristen和Rachel。</li>
 </ol>
+<p><img alt="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.1.png?raw=true" src="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.1.png?raw=true" />F1.1.png</p>
 <p>Figure1.1: A sample story and comprehension questions from the MCTEST dataset
 （Richardson et al., 2013）.</p>
 <p>是否有一种综合评价可以检验所有这些方面，并探索更深层次的理解？我们认为，阅读理解的任务——在一篇文章中回答理解性问题——是一种恰当而重要的方法。就像我们使用阅读理解测试来衡量一个人对一段文字的理解程度一样，我们相信它也可以在评估计算机系统对人类语言的理解程度方面发挥同样的作用。【译者注，这个和我们利用阅读理解来判定一个人的语言水平是类似的思想，所以高考的阅读理解是很有意义的】</p>
@@ -184,7 +180,7 @@
 <p>正如我们所看到的，我们的计算机系统必须理解文本的各个方面来正确地回答这些问题。由于问题可以被设计成问询我们关心的方面，所以<strong>阅读理解可能是评估语言理解最合适的任务</strong>（<em>reading comprehension could be the most suitable task for evaluating language understanding）</em>。这是本文的中心主题。</p>
 <p>在本文中，我们研究了阅读理解的问题：我们如何构建计算机系统来阅读一篇文章并回答这些理解性问题？我们特别关注<strong>神经阅读理解</strong>（<em>neural reading comprehension</em>），这是一种使用深度神经网络建立的阅读理解模型，它已经被证明比非神经（网络）的、基于特征的模型更有效。</p>
 <p>阅读理解这个领域有着悠久的历史——早在20世纪70年代，研究者就已经认识到它是测试计算机程序语言理解能力的重要方法（Lehnert， 1977）。然而，这个领域已经被忽视了几十年。直到最近，它才得到了大量的关注，并取得了快速的进展（参见Figure 1.2作为一个例子），包括我们将在本文中详细介绍的我们付出的努力。最近阅读理解的成功可以归因于两个原因：1）以（文章、问题、答案）三元组的形式的大规模监督数据集创建；2）神经阅读理解模型的建立。</p>
-<p><img alt="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png" src="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png" />F1.2</p>
+<p><img alt="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png?raw=true" src="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png?raw=true" />F1.2.png</p>
 <p>Figure 1.2: A search result on GOOGLE. It not only returns a list of search documents but gives more precise answers within the documents.</p>
 <p>在这篇论文中，我们将涵盖现代神经阅读理解的本质：问题的形成，系统的构建模块和关键成分，以及理解当前的神经阅读理解系统在哪些方面可以做得更好，哪些方面仍然落后。</p>
 <p>本文的第二个中心主题是，我们深信，如果我们能够构建出高性能的阅读理解系统，<strong>它们将成为问答和对话系统等应用的关键技术</strong>（<em>they would be a crucial technology for applications such as question answering and dialogue systems</em>）。事实上，这些语言技术已经与我们的日常生活息息相关。例如，如果我们今天在谷歌中输入一个搜索查询“how many people work at stanford univerisity？””（Figure 1.2），谷歌不仅返回搜索文档列表，还尝试读取这些Web文档，最后突出显示最可信的答案，并将它们显示在搜索结果的顶部。我们相信这正是阅读理解可以起作用的地方，因此可以促进更智能的搜索引擎。此外，随着亚马逊（Amazon）的ALEXA、苹果（Apple）的SIRI、谷歌ASSISTANT或微软（Microsoft）的小娜（CORTANA）等数字个人助理的发展，越来越多的用户通过询问有关信息的问题来参与到这些设备（的建设中）[^1]。我们相信，建造能够阅读和理解文本的机器将会极大的改善这些个人助理的能力。</p>
@@ -197,7 +193,7 @@
 <h2>1.2 Thesis Outline<a class="headerlink" href="#thesis-outline" title="永久链接至标题">¶</a></h2>
 <p>根据我们刚刚讨论的两个中心主题，本文由两部分组成:第一部分神经阅读理解基础（PART I NEURAL READING COMPREHENSION: FOUNDATIONS）和第二部分神经阅读理解应用（PART II NEURAL READING COMPREHENSION: APPLICATIONS）。</p>
 <p>【译者注： excruciatingly： 难以忍受地； allegedly：据说】</p>
-<p><img alt="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png" src="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.2.png" />F1.3</p>
+<p><img alt="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.3.png?raw=true" src="https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F1.3.png?raw=true" />F1.3.png</p>
 <p>Figure1.3: AconversationfromCOQAbasedonanCNNarticle.</p>
 <p>第一部分（PART 1）侧重于阅读理解的任务，强调仔细阅读一小段，使计算机系统能够回答理解性问题。</p>
 <p>第二章首先概述了阅读理解的发展历史和现状。接下来，我们正式定义了问题的表达式及其表达式的主要类别。然后简要讨论了阅读理解和一般问答（问题）的差异。最后，我们认为最近神经阅读理解的成功是由大规模数据集和神经模型（一起）驱动的。</p>

@@ -36,7 +36,11 @@ PART I Neural Reading Comprehension: Foundations
 
 在最初的MCTEST paper中，Richardson等人（2013）在没有利用任何训练数据的情况下，提出了几个基于规则的基线（baseline）。一种是启发式滑动窗口方法，它测量问题、答案和滑动窗口中单词之间的加权单词重叠/距离信息；另一种方法是通过将每个问答对转换为一个语句来运行现成的文本蕴涵系统。这个数据集后来启发了一系列机器学习模型（Sachan et al.， 2015；Narasimhan和Barzilay， 2015；Wang et al.， 2015）。这些模型大多建立在一个简单的max-margin学习框架之上，该框架具有丰富的手工设计的语言特性，包括句法依赖、语义框架、指代消解、篇章关系和单词嵌入。MC500的性能从63%略微提高到70%左右。在PROCESSBANK数据集上，Berant等人（2014）提出了一种统计模型，该模型首先学会预测流程结构，然后将问题映射到可以针对该结构执行的正式查询。同样，模型结合了大量的手工特征，最终在二分类任务上获得了66.7%的准确率。
 
-![image-20190703075018343](/Users/ljy/Library/Application Support/typora-user-images/image-20190703075018343.png)
+
+
+![image-20190703075018343](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/T2.1-1.png.png?raw=true)
+
+
 
 ![image-20190703075040391](/Users/ljy/Library/Application Support/typora-user-images/image-20190703075040391.png)
 
@@ -60,6 +64,11 @@ Table 2.1： A few examples from representative reading comprehension datasets�
 
 为了解决这些限制，Rajpurkar等人（2016）收集了一个名为STANFORD QUESTION ANSWER DATASET（SQUAD）的新数据集。数据集包含了536篇维基百科文章中的107，785对问答对，这些问题都是由群体工作者提出的，每个问题的答案对应相应的文章中的一段文本 （表2.1 （c））。SQUAD是第一个具有自然问题的大规模阅读理解数据集。由于其高质量和可靠的自动评估，该数据集引起了NLP社区的极大兴趣，并成为该领域的中心基准。这反过来启发了一系列新的阅读理解模型（Wang and Jiang， 2017； Seo et al.， 2017； Chen et al.， 2017； Wang et al.， 2017； Yu et al.， 2018） 并且研究的进展十分迅速，截至2018年10月，表现最好的单一的系统实现了91.8%的F1得分（Devlin et al .， 2018），而这个已经超过91.2%，我们预期的人类表现，而最初的作者在2016年构建的基于特征的分类器只获得了51.0%的F1值，如图2.1所示。
 
+![Figure 2.1: The progress on SQUAD 1.1 (single model) since the dataset was released in
+June 2016. The data points are taken from the leaderboard at http://stanford-qa.com/.](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F2.1.png?raw=true)
+
+
+
 目前所有在SQUAD上面表现最好的系统都是建立在端到端神经网络或深度学习模型上的（end-to-end neural networks， or deep learning models）。这些模型往往会先从将文章和问题中的每一个单词表示为一个稠密向量开始（例如，300维）。经过几次建模或者交互层，最后进行预测。所有的参数可以使用梯度下降算法或者它的变种一起进行优化。这一类模型可以被称为神经阅读理解（neural reading comprehension），我们将会在第三章详细的阐述他。不同于基于特征的分类起，神经阅读理解模型有几个优点。
 
 - 他们不依赖于任何下游的语言学特征（比如，依存分析或者指代消解），并且所有的特征是在一个统一的端到端的的框架中独立学习来的。这避免了语言学标注的噪音，并且也在可用的特征空间中提供了更好的了灵活性。
@@ -74,12 +83,8 @@ Table 2.1： A few examples from representative reading comprehension datasets�
 
   所以一个系统必须基于标记好的特征来学习comprising与make up的一致性，例如下面的特征：
   $$
-  pw_i = comprising ∧ qw_j = make ∧ qw_{j+1} = up. 
+  pw_i = comprising ∧ qw_j = make ∧ qw_{j+1} = up.
   $$
-  pwi = comprising ∧ qwj = make ∧ qwj+1 = up. 
-
-  ∧qwj = make∧qwj+1 = up。
-
   这里并没有足够的数据来给这些特征赋予正确的权重。这在所有的非神经NLP模型中是一个共有的问题。利用低维，稠密的词向量共享相似词语之间在统计上的强度，可以有效的缓解稀疏性。
 
 - 这些模型从从构建大量手工特征的劳动中解脱出来。因此，神经模型在概念上更简单，（研究）重点可以转移到神经结构的设计（译者注：可以从构建手工特征中解放，转而研究神经网络结构）。由于现代深度学习框架如TENSORFLOW和PYTORCH的发展，已经取得了很大的进步，现在开发新的模型又快又容易。
@@ -97,36 +102,30 @@ Table 2.1： A few examples from representative reading comprehension datasets�
 
 阅读理解的任务可以表述为一个监督学习问题：
 
-给定一组训练实例![img](file:////Users/ljy/Library/Group%20Containers/UBF8T346G9.Office/msoclip1/01/clip_image001.png)，目标是学习一个预测器f，它以一段文本p和一个相应的问题q作为输入，给出答案a作为输出。
+给定一组训练实例${(p_i, q_i, a_i)}^n_{i=1}$ ，目标是学习一个预测器*f*，它以一段文本*p*和一个相应的问题*q*作为输入，给出答案a作为输出。
 
-f：（p， q） →a            （2.1）
+*f：（p， q） →a*            （2.1）
 
-令p = （p1，p2，…，plp），q = （q1，q2，…，qlq），其中lp和lq分别表示文本（passage）和问题（question）的长度。V为预定义词汇表，则对于i=1，。。。。，lp，pi∈V，且i=1，。。。。，lq，qi∈V。在这里，我们只把文本p看作一个由lp单词序列表示的短段落。将其扩展到多段形式（Clark and Gardner， 2018）非常简单，其中p是一组段落，或者将其分解为更小的语言单元，如句子。
+令$p=(p_1,p_2, … , p_{l_p})$，$q = （q_1，q_2，…，q_{l_q}）$，其中$l_p$和$l_q$分别表示文本（passage）和问题（question）的长度。*V*为预定义词汇表，则对于i=1，。。。。，$l_p$，$p_i∈V$，且i=1，。。。。，$l_q$，$q_i∈V$。在这里，我们只把文本p看作一个由lp单词序列表示的短段落。将其扩展到多段形式（Clark and Gardner， 2018）非常简单，其中p是一组段落，或者将其分解为更小的语言单元，如句子。
 
 根据答案类型的不同，答案a可以采取完全不同的形式。一般来说，我们可以把现有的阅读理解任务分为四类： 
 
-l   完形填空类型（Cloze style）：问题包含一个placeholder（占位符）。例如：
+1. 完形填空类型（Cloze style）：问题包含一个placeholder（占位符）。例如：
 
-​       RTottenham manager Juande Ramos has hinted he will allow _____ to leave if the Bulgaria striker makes it clear he is unhappy.
+   ​       RTottenham manager Juande Ramos has hinted he will allow _____ to leave if the Bulgaria striker makes it clear he is unhappy.
 
-在这些任务中，系统必须基于文本来猜测哪些词或实体来完善句子（问题）。并且答案要么是选择从一组预定义的候选集中选择要么是从一个完整的词汇表中选择。比如说，，在WHO-DID-WHAT数据集中 （Onishi et al .， 2016），答案必须是文本中的一个人名，而其候选集的大小平均为3.5。
+   在这些任务中，系统必须基于文本来猜测哪些词或实体来完善句子（问题）。并且答案要么是选择从一组预定义的候选集中选择要么是从一个完整的词汇表中选择。比如说，，在WHO-DID-WHAT数据集中 （Onishi et al .， 2016），答案必须是文本中的一个人名，而其候选集的大小平均为3.5。
 
-l   多项选择类型（Multiple choice）：在这个类别下，正确答案从k个假设答案中选择（比如：k=4）
- A={a1， …， ak} where ak = （ak，1，ak，2，…ak，la，k），ak，I < V
+2. 多项选择类型（Multiple choice）：在这个类别下，正确答案从k个假设答案中选择（比如：k=4）
+    A={a1， …， ak} where ak = （ak，1，ak，2，…ak，la，k），ak，I < V
 
-正确的答案可以是一个单词，一个短语或者是一句话。给出的假设答案中有一个是正确的，所以a必须从{a1，…ak}中选择。
+   正确的答案可以是一个单词，一个短语或者是一句话。给出的假设答案中有一个是正确的，所以a必须从{a1，…ak}中选择。
 
-l   范围预测类型（Span prediction）：这个类别也被称为抽取式问答（extractive question answering）并且答案必须是文本中的一个范围。因此，答案可以表示为（astart， aend），其中1<=astart<=aend<=lp。并且答案对英语pastart，…paend。
+3. 范围预测类型（Span prediction）：这个类别也被称为抽取式问答（extractive question answering）并且答案必须是文本中的一个范围。因此，答案可以表示为（a_start， a_end），其中1<=a_start<=a_end<=lp。并且答案对英语pastart，…paend。
 
-l   自由形式回答类型（Free-form answer）：最后一种类型允许答案是任何形式的文本（即，任意长度的单词序列），形式上：a∈V。
+4. 自由形式回答类型（Free-form answer）：最后一种类型允许答案是任何形式的文本（即，任意长度的单词序列），形式上：a∈V。
 
 表2.1给出了每个类型的问题所属典型数据集的示例：CNN/DAILY MAIL （Hermann et al.， 2015） （cloze style）， MCTEST （Richardson et al.， 2013） （multiple choice）， SQUAD （Rajpurkar et al.， 2016） （span prediction） and NARRA- TIVEQA （Kocˇisky` et al.， 2018） （free-form answer）. 
-
- 
-
- 
-
-
 
 
 
@@ -135,15 +134,17 @@ l   自由形式回答类型（Free-form answer）：最后一种类型允许答
 
 我们已经正式定义了四种不同类别的阅读理解任务，接下来我们将讨论它们的评估指标。
 
+【译者 注：对于任何任务来说，衡量结果的好坏都是非常重要的一件事。如果有量化的机制来评估好坏，可以更好帮助我们作出正确的决策】
+
 对于多项选择题或完形填空题，评估准确性非常简单：系统给出正确答案的问题的百分比，因为答案是从一小组假设答案中选择的。
 
 对于范围预测任务，我们需要将预测的答案与正确答案进行比较。通常，我们使用Rajpurkar等人（2016）提出的两种评估指标，即精确匹配和部分得分：
 
-l   精准匹配（Exact match，EM）如果预测的答案等于正确答案，则精确匹配（EM）将分配满分1.0分，否则将分配满分0.0分。
+1. 精准匹配（Exact match，EM）如果预测的答案等于正确答案，则精确匹配（EM）将分配满分1.0分，否则将分配满分0.0分。
 
-l   F1得分（F1 score）计算预测答案和正确答案之间的平均单词重叠。预测答案和正确答案被看作一堆token，所以token-level的F1得分计算如下：
+2. F1得分（F1 score）计算预测答案和正确答案之间的平均单词重叠。预测答案和正确答案被看作一堆token，所以token-level的F1得分计算如下：
 
-F1 = 2×Precision×Recall/（Precision+Recall） 
+   ​				F1 = 2×Precision×Recall/（Precision+Recall） 
 
 Rajpurkar等人（2016）（提出评估指标之后）之后，在评估中所有标点符号都被忽略，对于英语文章，a， an，以及the也被忽略。
 
@@ -154,15 +155,13 @@ Rajpurkar等人（2016）（提出评估指标之后）之后，在评估中所�
 
 
 
-
-
 ## 2.3 Reading Comprehension vs. Question Answering
 
 阅读理解与问答有着密切的关系。我们可以把阅读理解看作是问答的一个实例，因为它很本质上是基于一篇短文的问答问题。然而，尽管阅读理解和一般的问答问题在问题的形成、方法和评价上有许多共同的特点，但我们认为它们最终目标强调了不同的东西：
 
-l   问答的最终目标是建立一个能够自动回答人类提出的问题计算机系统，系统可以依赖任何资源。这些资源可以是结构化的知识库、非结构化的文本集合（百科全书、词典、新闻专线文章和一般Web文档）、半结构化的表，甚至是其他模式。为了提高QA系统的性能，人们在（1）如何搜索和识别相关资源，（2）如何集成来自不同信息片段的答案，甚至（3）研究人类在现实世界中通常会问哪些类型的问题上进行了大量的工作。
+- 问答的最终目标是建立一个能够自动回答人类提出的问题计算机系统，系统可以依赖任何资源。这些资源可以是结构化的知识库、非结构化的文本集合（百科全书、词典、新闻专线文章和一般Web文档）、半结构化的表，甚至是其他模式。为了提高QA系统的性能，人们在（1）如何搜索和识别相关资源，（2）如何集成来自不同信息片段的答案，甚至（3）研究人类在现实世界中通常会问哪些类型的问题上进行了大量的工作。
 
-l   然而，阅读理解（reading comprehension）强调的是文本理解（text understanding）和一些被认为是衡量语言理解程度的尖锐问题。因此，要回答这个问题，需要对给定的段落有深刻的理解。由于这一关键的区别，这一领域的早期作品大多集中在虚构的故事（Lehnert， 1977）（后来扩展到Wikipedia或Web文档），所以所有回答理解问题的信息都来自文章本身，而不是任何世界知识。这些问题也是专门为测试文本理解的不同方面而设计的。这种区别类似于人们通常在搜索引擎上问的问题与在人类阅读理解测试中通常会提出的问题。
+- 然而，阅读理解（reading comprehension）强调的是文本理解（text understanding）和一些被认为是衡量语言理解程度的尖锐问题。因此，要回答这个问题，需要对给定的段落有深刻的理解。由于这一关键的区别，这一领域的早期作品大多集中在虚构的故事（Lehnert， 1977）（后来扩展到Wikipedia或Web文档），所以所有回答理解问题的信息都来自文章本身，而不是任何世界知识。这些问题也是专门为测试文本理解的不同方面而设计的。这种区别类似于人们通常在搜索引擎上问的问题与在人类阅读理解测试中通常会提出的问题。
 
 类似地，早期的工作（Mitchell et al.，2009）使用术语微观阅读（micro-reading）和宏观阅读（macro-reading）来区分这两种情况。微阅读侧重于阅读单个文本文档，旨在提取该文档的完整信息内容（类似于我们的阅读理解设定），而宏观阅读则采用大文本集合（如Web）作为输入，提取文本中表达的事实而形成一个很大的集合，而不需要提取每一个事实。尽管宏观阅读则需要考察语言理解的更深层次，但是宏观阅读可以通过分析文本中事实的简单措辞，有效地利用跨文档的信息冗余。
 
@@ -172,13 +171,19 @@ l   然而，阅读理解（reading comprehension）强调的是文本理解（t
 
 从2.1.3节可以看出，近年来阅读理解的成功主要是由两个关键部分驱动的：**大型阅读理解数据集**和**端到端神经阅读理解模型**。他们共同努力推进这一领域的发展，并推动建立更好阅读理解系统的边界：
 
-一方面，大规模阅读理解数据集的创建使得训练神经模型成为可能，同时也展示了它们相对于符号NLP系统的竞争力。这些数据集的可用性进一步吸引了我们研究社区的大量关注，并激发了一系列建模创新。受益于所有这些努力，已经取得了巨大的进展。
+一方面，**大规模阅读理解数据集的创建使得**训练神经模型成为可能，同时也展示了它们相对于符号NLP系统的竞争力。这些数据集的可用性进一步吸引了我们研究社区的大量关注，并激发了一系列建模创新。受益于所有这些努力，已经取得了巨大的进展。
 
-另一方面，了解现有模型的性能有助于进一步认识现有数据集的局限性。这促使我们寻求更好的方法来构建更具挑战性的数据集，以实现文本的机器压缩的最终目标。
+另一方面，**了解现有模型的性能有助于进一步认识现有数据集的局限性**。这促使我们寻求更好的方法来构建更具挑战性的数据集，以实现文本的机器压缩的最终目标。
 
-图2.2显示了2016年以来关键数据集和模型的最新开发时间轴。正如所看到的，尽管只有三年的时间，这个领域已经取得了惊人的进展。在建立更好的数据集和更有效的模型方面的创新交替出现，并对该领域的发展作出了贡献。在未来，我们认为继续发展这两个部分都同样重要。
+![Figure 2.2: The recent development of datasets (black) and models (blue) in neural read-
+ing comprehension. For the timeline, we use the date that the corresponding papers were
+published, except BERT (Devlin et al., 2018).](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/F2.2.png?raw=true)
 
 图2.2：最近神经阅读理解领域的数据集（黑色）和模型（蓝色）的发展。对于时间轴，除了BERT （Devlin et al.， 2018），我们使用了相应论文发表的日期。
+
+
+
+图2.2显示了2016年以来关键数据集和模型的最新开发时间轴。正如所看到的，尽管只有三年的时间，这个领域已经取得了惊人的进展。在建立更好的数据集和更有效的模型方面的创新交替出现，并对该领域的发展作出了贡献。在未来，我们认为继续发展这两个部分都同样重要。
 
 在下一章中，我们将主要关注建模方面，并会使用我们前面描述的两个表示数据集：CNN/DAILY MAIL和SQUAD。在第4章，我们将讨论更多关于数据集和模型的进展和未来的工作。
 
