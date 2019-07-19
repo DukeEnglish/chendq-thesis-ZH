@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3 Neural Reading Comprehension Models &mdash; chendq-thesis-ZH 1.0 文档</title>
+  <title>Chapter 3 Neural Reading Comprehension Models &mdash; chendq-thesis-ZH 1.0 文档</title>
   
 
   
@@ -35,7 +35,9 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" /> 
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Chapter 4 The Future of Reading Comprehension" href="Chapter4.html" />
+    <link rel="prev" title="Chapter 2 An Overview of Reading Comprehension" href="Chapter2.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -79,12 +81,27 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../introduction/Preface.html">Preface 译者 注</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction/Abstract.html">摘要</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction/Acknowledge.html">Acknowledgements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction/Chapter1.html">Chapter 1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter2.html">Chapter 2 An Overview of Reading Comprehension</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Chapter 3 Neural Reading Comprehension Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#previous-approaches-feature-based-models">3.1 Previous Approaches：Feature-based Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-neural-approach-the-stanford-attentive-reader">3.2 A Neural Approach： The Stanford Attentive Reader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preliminaries">3.2.1 Preliminaries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-model">3.2.2 The Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extensions">3.2.3 Extensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#experiments">3.3 Experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter4.html">Chapter 4 The Future of Reading Comprehension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part2/Chapter5.html">Chapter 5 Open Domain Question Answering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part2/Chapter6.html">Chapter 6 Conversational Question Ansering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../con/Chapter7.html">Chapter 7 Conclusions</a></li>
 </ul>
 
             
@@ -130,7 +147,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>3 Neural Reading Comprehension Models</li>
+      <li>Chapter 3 Neural Reading Comprehension Models</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,8 +166,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="neural-reading-comprehension-models">
-<h1>3 Neural Reading Comprehension Models<a class="headerlink" href="#neural-reading-comprehension-models" title="永久链接至标题">¶</a></h1>
+  <div class="section" id="chapter-3-neural-reading-comprehension-models">
+<h1>Chapter 3 Neural Reading Comprehension Models<a class="headerlink" href="#chapter-3-neural-reading-comprehension-models" title="永久链接至标题">¶</a></h1>
 <p>在本章中，我们将介绍神经网络模型的本质：从基本构建模块，到最近的进展。</p>
 <p>在深入研究神经模型的细节之前，我们在3.1节简要介绍了<strong>用于阅读理解的基于特征的非神经模型</strong>。特别地，我们描述了我们在Chen et al.（2016）中构建的一个模型。我们希望这能让读者更好地理解这两种方法的本质区别。</p>
 <p>在3.2节中，我们提出了一种<strong>用于阅读理解的神经方法</strong>，称为THE STANFORD ATTENTIVE READER，这在Chen et al.（2016）中针对完形填空式阅读理解任务被首次提出，之后又将其应用于SQUAD的范围预测问题（Chen et al.，2017）。我们首先简要回顾了现代神经NLP模型的基本构建模块，然后描述了我们的模型是如何建立在这些模块之上的。最后，我们将其扩展到其他类型的阅读理解问题。</p>
@@ -347,6 +364,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Chapter4.html" class="btn btn-neutral float-right" title="Chapter 4 The Future of Reading Comprehension" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Chapter2.html" class="btn btn-neutral float-left" title="Chapter 2 An Overview of Reading Comprehension" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

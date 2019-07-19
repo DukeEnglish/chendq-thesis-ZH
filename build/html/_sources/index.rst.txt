@@ -21,7 +21,12 @@ Welcome to chendq-thesis-ZH's documentation!
    introduction/Acknowledge
    introduction/Chapter1
    part1/Chapter2
+   part1/Chapter3
+   part1/Chapter4
 
+   part2/Chapter5
+   part2/Chapter6
+   con/Chapter7
 
 Indices and tables
 ==================

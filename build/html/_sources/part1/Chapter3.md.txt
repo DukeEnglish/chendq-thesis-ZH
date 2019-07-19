@@ -1,4 +1,4 @@
-# 3 Neural Reading Comprehension Models
+# Chapter 3 Neural Reading Comprehension Models
 
 在本章中，我们将介绍神经网络模型的本质：从基本构建模块，到最近的进展。
 
