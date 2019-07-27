@@ -14,17 +14,19 @@
 
 图4.1展示了我们在3.2节中描述的STANFORD ATTENTIVE READER模型的一些失败案例。正如我们所看到的，该模型完美地预测了所有这些例子的答案类型：它预测了问题的一个数字，即……吗？人口是多少……吗？哪支球队赢得了超级碗50强？然而，该模型无法理解文本中表达的微妙之处，也无法区分候选答案。细节如下，
 
-.    （a）  The number *2**，**400* modifies *professors**，* *lecturers**，* *and instructors* while *7**，**200* modi- fies *undergraduates*. However， the system failed to identify that and we believe that linguistic structures （e.g.， syntactic parsing） can help resolve this case.  
+ （a）  The number *2**，**400* modifies *professors**，* *lecturers**，* *and instructors* while *7**，**200* modi- fies *undergraduates*. However， the system failed to identify that and we believe that linguistic structures （e.g.， syntactic parsing） can help resolve this case.  
 
-.    （b）  Both teams *Denver Broncos* and *Carolina Panthers* are modified by the word *cham- pion*， but the system failed to infer that “X defeated Y” so “X won”.  
+ （b）  Both teams *Denver Broncos* and *Carolina Panthers* are modified by the word *cham- pion*， but the system failed to infer that “X defeated Y” so “X won”.  
 
-.    （c）  The system predicted *100**，**000* probably because it is closer to the word *population*. However， to answer the question correctly， the system has to identify that *3.7 million* is the population of *Los Angles*， and *1.3 million* is the population of *San Diego* and compare the two numbers and infer that *1.3 million* is the answer because it is *second largest*. This is a difficult example and probably beyond the scope of all the existing systems.  
+ （c）  The system predicted *100**，**000* probably because it is closer to the word *population*. However， to answer the question correctly， the system has to identify that *3.7 million* is the population of *Los Angles*， and *1.3 million* is the population of *San Diego* and compare the two numbers and infer that *1.3 million* is the answer because it is *second largest*. This is a difficult example and probably beyond the scope of all the existing systems.  
 
 我们还仔细研究了迄今为止最佳阵容模型的预测，7个BERT模型的集合（Devlin et al.， 2018）。如图4.2所示，我们可以看到这个强大的模型仍然会犯一些人类几乎不会犯的简单错误。可以推测，这些模型一直在进行非常复杂的文本匹配，但它们仍然难以理解实体和文本中所表达的事件之间的内在结构。
 
 最后，Jia和Liang（2017）发现，如果我们在文章末尾添加一个让人分心的句子（见图4.3中的例子），目前阅读理解系统的平均性能将会从75.4%大幅下降到36.4%。这些让人分心的时态与问题有词汇重叠，但实际上并不与正确答案相矛盾，也不会误导人类的理解。如果允许分散注意力的句子添加不符合语法的单词序列，那么效果会更糟。这些结果表明，1）目前的模型在很大程度上依赖于文章和问题之间的词汇线索。这就是为什么分散注意力的句子会如此具有破坏性；2）虽然模型在原始开发集上取得了很高的精度，但对于对抗性的例子，它们的鲁棒性并不强。这是标准监督学习范式的一个关键问题，它使得现有的模型难以在现实世界中部署。我们将在第4.3节中更多地讨论鲁棒性的特性。
 
 综上所述，我们认为，目前的模型虽然在SQUAD数据集上已经获得了很高的精度，但目前的模型只关注文本的表层信息，在理解的（稍微）更深层次上仍然存在简单的错误。另一方面，高准确度也表明，大多数球队的例子是相当容易的，需要很少的理解。有一些困难的例子需要在SQUAD中进行复杂的推理（例如，图4.1中的（c）），但是由于它们的稀缺性，它们的准确性并没有真正反映在平均度量中。此外，高accu- racies只有在训练和发展来自同一分布时才成立，当它们不同时仍然是一个严重的问题。在接下来的两部分中，我们将讨论创建更具挑战性的数据集和构建更有效模型的可能性。
+
+![image-20190727220644149](http://ww4.sinaimg.cn/large/006tNc79ly1g5er0fui0lj30js0q844y.jpg)
 
 ## 4.2 Future Work： Datasets
 
@@ -142,6 +144,5 @@ modules的思想以前已经在神经模块网络（NMN）中实现过（Andreas
 在未来，我们应该鼓励更多在非监督学习和迁移学习上的研究。利用非标注数据（例如text）或者别的廉价的资源或者监督（例如CNN/DAILY MAIL这样的数据集）会将我们从收集昂贵的标注数据中解放出来。我们也应该寻找更好和更加便宜的方式来收集监督数据。
 
 
- 
 
- 
+
