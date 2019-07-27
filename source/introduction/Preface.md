@@ -14,7 +14,7 @@ NLP领域逐渐进入人们的视野，从word2vec到BERT再到后来提出的�
 
 在未来，有时间的情况话，我会对文中提到的一些有代表性的论文进行解读。部分论文会进行复现。
 
-才疏学浅，有不足之处，还望指出。谢谢。
+才疏学浅，有不足之处，还望指出。谢谢。可以直接提出issue或者通过邮件联系：4ljy@163.com。
 
 本文翻译已经咨询过原作者。
 
@@ -33,8 +33,6 @@ https://www.cs.princeton.edu/~danqic/papers/thesis.pdf
 陈丹琦博士个人主页：
 
 https://www.cs.princeton.edu/~danqic/
-
-
 
 Duke Lee
 
