@@ -28,7 +28,7 @@ $$w􏰇^Tf_{p,q}(a) > w􏰇^Tf_{p,q}(e), ∀e ∈ \epsilon \ {a},$$
 
 
 
-![Table 3.1: Features used in our entity-centric classifier in Chen et al. (2016).](/Users/ljy/Work/BOOK/translation/CDQ/chendq-thesis-ZH/source/img/T3.1.png)
+![Table 3.1: Features used in our entity-centric classifier in Chen et al. (2016).](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/T3.1.png?raw=true)
 
 Table 3.1
 
@@ -68,13 +68,13 @@ $$h_t=tanh(W^{hh}h_{t-1}+W^{hx}x_t+b)$$
 
 其中Whh∈Rh×h，Whx∈Rh×d， b∈Rh为待学习参数。为了简化优化，提出了许多RNNs的变体。其中，长短时记忆网络（LSTMs） （Hochreiter and Schmidhuber， 1997）和门控循环单元（GRUs） （Cho et al.， 2014）是常用的一种。可以说，LSTM仍然是当今NLP应用中最有竞争力的RNN变体，也是我们将描述的神经模型的默认选择。在数学上，LSTMs可以表示为：
 
-【公式…写论文好辛苦，我就不重新敲lstm的公式了，如果对lstm有问题的话，欢迎查看网络博客：】![image-20190704070606369](/Users/ljy/Work/BOOK/translation/CDQ/chendq-thesis-ZH/source/img/g3.1.png)
+【公式…写论文好辛苦，我就不重新敲lstm的公式了，如果对lstm有问题的话，欢迎查看网络博客：】![image-20190704070606369](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/g3.1.png?raw=true)
 
 其中所有的W和b都是待学习参数。
 
 最后，RNN中一个有用的东西是*bidirectional RNN*：想法很简单：对于一个句子或者一个段落来说：x=x1,….xn，一个前向RNN从左到右学习，另一个反过来学习。
 
-![image-20190704070906479](/Users/ljy/Work/BOOK/translation/CDQ/chendq-thesis-ZH/source/img/g3.2.png)
+![image-20190704070906479](https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/g3.2.png?raw=true)
 
 最后，我们定义h_t是将公式中的两个h做拼接得到的结果。这些表示可以有效编码左边和右边的上下文，并且适用于多种NLP任务的通用可训练特征提取组件。
 
@@ -86,17 +86,13 @@ $$h_t=tanh(W^{hh}h_{t-1}+W^{hx}x_t+b)$$
 
  
 
- 
-
 ### 3.2.2 The Model
 
 目前，我们已经具备了所有的构建模块。我们如何利用他们为阅读理解建立有效的神经模型呢？关键成分是什么？接下来我们会介绍我们的模型：STANFORD ATTENTIVE READER。我们的模型受到Hermann et al.（2015）中描述的ATTENTIVE READER以及其他同一时期工作的启发，并且满怀着让模型简单高效的目标。我们首先描述了模型解决范围预测问题的全形式（我们在Chen et al（2017）中预测了），之后我们讨论了其他的变种。
 
-让我们首先回顾一下基于范围的预测阅读理解问题的设定：
+让我们首先回顾一下基于范围的预测阅读理解问题的设定：给定一个passage p，由l_p个tokens(p1,p2,…pl_p)组成，以及一个问题q，有l_q个token(q1, q2, …ql_q)组成，目标是预测一个范围（a_start, a_end），其中1<=a_start<=a_end<=l_p，所以对应的字符串：p_{a_start}, p_{a_start+1}, … , p_{a_end}就是问题的答案。
 
-   
 
- 
 
 整个模型如图3.1所示。纵观整个模型，模型首先为问题构建一个向量表示，并为文章中的每个token构建一个向量来表示。然后计算上下文中问题及其短文词之间的相似度函数，然后使用问题-短文相似度评分来决定答案跨度的起始和结束位置。该模型建立在文章和问题中每个单词的低维、预先训练的单词嵌入的基础上（可以选择使用语言学标注）。对文章/问题编码的所有参数和相似度函数进行联合优化，实现最终的答案预测。让我们进一步了解每个组件的细节：
 
