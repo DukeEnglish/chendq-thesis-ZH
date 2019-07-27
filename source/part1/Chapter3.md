@@ -80,19 +80,39 @@ $$h_t=tanh(W^{hh}h_{t-1}+W^{hx}x_t+b)$$
 
 **Attention mechanism** 
 
-第三个重要的组件是attention机制。
+第三个重要的组件是attention机制。这个机制首次在sequence-to-sequence模型（Sutskever et al., 2014）中被提出为神经机器翻译提出（Bahdanau et al., 2015; Luong et al., 2015）并且之后被延伸应用到别的NLP任务中。
+
+关键的想法是，如果我们想要预测一句话的情感（sentiment），或者从一种语言的一句话翻译到另外一种语言，我们通常使用recurrent neural networks来对一句话做编码（encode）：h1, h2, …hn并且使用最后一个time step的hn来预测最后的情感标签或者是目标语言的第一个word：
+
+$$P(Y = y) = exp(W_yh_n) / \sum_{y'}exp(W_{y'}h_n)$$
+
+这要求模型可以压缩一句话的所有信息到一个固定长度的向量中，这会导致在提升性能上的信息瓶颈。注意力机制(attention)就是设计来解决这个问题的：与其将所有的信息都压缩在最后一个隐藏向量中，我们监督每一个time step，并且自适应地选择这些向量的子集：
+
+$$\alpha_i= exp(g(h_i, w; \Theta_g)) / \sum_{i'=1}^n exp(g(h_{i'}, w; \Theta_g))$$
+
+$$c= \sum_{i=1}^n \alpha_ih_i$$
+
+ 这里的w可以是在训练过程中针对任务学习出来的向量，或者当作机器翻译中现在的目标隐藏状态，g是一个可以以多种不同方式选择的参数，比如说点乘，bilinear product或者是MLP的一个隐藏层：
+
+$$g_{dot}(h_i, w) = h_i^Tw$$
+
+$$g_{bilinear}(h_i, w) = h_i^TWw$$
+
+$$g_{MLP}(h_i, w) = v^Ttanh(W^hh_i + W^ww)$$
+
+简单来说，注意力机制对每一个$h_i$ 计算一个相似度分数，之后使用一个softmax方程来为每一个time step返回一个离散概率分布。因此$\alpha$本质上捕获的句子的哪些部分确实是相关，而c聚合了所有time step的信息，可用于最终的预测。我们不会在这里讨论更多细节，感兴趣的读者可以参考Bahdanau等人(2015);Luong等(2015)。
+
+注意力机制已经被证明在大量的应用是有广泛的影响力，并且成为神经NLP模型的一个组成部分。最近，Parikn等人（2016）和Vaswani等人（2017）推测注意力机制并不一定非要和RNN一起使用，并且可以单纯得基于word embeddings和前向神经网络建立，同时提供最小的序列信息。这类方法通常需要更少的参数，并且更加容易并行和规模变化。特别的，Vaswani等人在2017年的论文中提出的transformer已经变成了最近的趋势，我们会在Section3.4.3中讨论它。
+
+![ 			 				 					 						Figure 3.1: A full model of STANFORD ATTENTIVE READER. Image courtesy:  					 				 				 					 						Let’s consider the algorithm in detail, following closely the description in Chen https://web.stanford.edu/ jurafsky/slp3/23.pdf.  					 				 			 		]((https://github.com/DukeEnglish/chendq-thesis-ZH/blob/master/source/img/T3.1.png?raw=true)
 
 
-
- 
 
 ### 3.2.2 The Model
 
 目前，我们已经具备了所有的构建模块。我们如何利用他们为阅读理解建立有效的神经模型呢？关键成分是什么？接下来我们会介绍我们的模型：STANFORD ATTENTIVE READER。我们的模型受到Hermann et al.（2015）中描述的ATTENTIVE READER以及其他同一时期工作的启发，并且满怀着让模型简单高效的目标。我们首先描述了模型解决范围预测问题的全形式（我们在Chen et al（2017）中预测了），之后我们讨论了其他的变种。
 
 让我们首先回顾一下基于范围的预测阅读理解问题的设定：给定一个passage p，由l_p个tokens(p1,p2,…pl_p)组成，以及一个问题q，有l_q个token(q1, q2, …ql_q)组成，目标是预测一个范围（a_start, a_end），其中1<=a_start<=a_end<=l_p，所以对应的字符串：p_{a_start}, p_{a_start+1}, … , p_{a_end}就是问题的答案。
-
-
 
 整个模型如图3.1所示。纵观整个模型，模型首先为问题构建一个向量表示，并为文章中的每个token构建一个向量来表示。然后计算上下文中问题及其短文词之间的相似度函数，然后使用问题-短文相似度评分来决定答案跨度的起始和结束位置。该模型建立在文章和问题中每个单词的低维、预先训练的单词嵌入的基础上（可以选择使用语言学标注）。对文章/问题编码的所有参数和相似度函数进行联合优化，实现最终的答案预测。让我们进一步了解每个组件的细节：
 
