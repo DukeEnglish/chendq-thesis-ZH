@@ -35,6 +35,7 @@ https://www.cs.princeton.edu/~danqic/papers/thesis.pdf
 
    con/Chapter7
    con/con
+   personal_intro
 
 Indices and tables
 ==================
