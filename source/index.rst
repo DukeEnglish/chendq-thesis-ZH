@@ -34,6 +34,7 @@ https://www.cs.princeton.edu/~danqic/papers/thesis.pdf
    part2/Chapter6
 
    con/Chapter7
+   con/BIBLIOGRAPHY
    con/con
    personal_intro
 
