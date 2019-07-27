@@ -1,3 +1,4 @@
+# Bibliography
 David Ahn, Valentin Jijkoun, Gilad Mishne, Karin Mu ̈ller, Maarten de Rijke, and Stefan Schlobach. 2004. Using Wikipedia at the TREC QA Track. In Text REtrieval Conference (TREC).
 Jacob Andreas, Marcus Rohrbach, Trevor Darrell, and Dan Klein. 2016. Learning to com- pose neural networks for question answering. In North American Association for Com- putational Linguistics (NAACL), pages 1545–1554.
 Stanislaw Antol, Aishwarya Agrawal, Jiasen Lu, Margaret Mitchell, Dhruv Batra, C Lawrence Zitnick, and Devi Parikh. 2015. VQA: Visual Question Answering. In International Conference on Computer Vision (ICCV), pages 2425–2433.
