@@ -9,6 +9,7 @@ Welcome to chendq-thesis-ZH's documentation!
 
 这里是我对陈丹琦博士的博士论文的翻译结果，因为都是在课余时间进行翻译的，所以很多地方可能翻译错误。在未来的时候，我会抽时间进行详细的解读，或者抽时间进行实验的复现。
 
+Neural Reading Comprehension and Beyond:https://www.cs.princeton.edu/~danqic/papers/thesis.pdf
 神经阅读理解与超越
 陈丹琦
 2018年12月
