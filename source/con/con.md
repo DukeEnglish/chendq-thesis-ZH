@@ -14,6 +14,8 @@ https://github.com/DukeEnglish/cs224n_learning_note
 
 这个课程的default final 是squad2。到时候回来再借鉴一下这个论文吧。
 
-告一段落，与君共勉。
+再次感谢作者的这篇论文，收获很多。也很感谢其对NLP的贡献。
+
+大家加油，与君共勉。
 
 啊，好好学习，天天向上吧！！！
