@@ -21,3 +21,6 @@ https://github.com/DukeEnglish/cs224n_learning_note
 大家加油，与君共勉。
 
 啊，好好学习，天天向上吧！！！
+
+Duke Lee
+
