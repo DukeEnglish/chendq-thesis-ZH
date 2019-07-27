@@ -14,8 +14,8 @@ Welcome to chendq-thesis-ZH's documentation!
 2018年12月
 
 .. toctree::
-
    :maxdepth: 2
+
    introduction/Preface
    introduction/Abstract
    introduction/Acknowledge
@@ -26,7 +26,9 @@ Welcome to chendq-thesis-ZH's documentation!
 
    part2/Chapter5
    part2/Chapter6
+
    con/Chapter7
+   con/con
 
 Indices and tables
 ==================
