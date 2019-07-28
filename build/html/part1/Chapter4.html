@@ -88,10 +88,27 @@
 <li class="toctree-l1"><a class="reference internal" href="../introduction/Chapter1.html">Chapter 1 Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter2.html">Chapter 2 An Overview of Reading Comprehension</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter3.html">Chapter 3 Neural Reading Comprehension Models</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Chapter 4 The Future of Reading Comprehension</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Chapter 4 The Future of Reading Comprehension</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#is-squad-solved-yet">4.1 Is SQuAD Solved Yet？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#future-work-datasets">4.2 Future Work： Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#future-work-models">4.3 Future Work： Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#desiderata">4.3.1 Desiderata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structures-and-modules">4.3.2 Structures and Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#research-questions">4.4 Research Questions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-measure-progress">4.4.1 How to Measure Progress？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#representations-vs-architecture-which-is-more-important">4.4.2 Representations vs. Architecture： Which is More Important？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-many-training-examples-are-needed">4.4.3 How Many Training Examples Are Needed？</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../part2/Chapter5.html">Chapter 5 Open Domain Question Answering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../part2/Chapter6.html">Chapter 6 Conversational Question Ansering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../con/Chapter7.html">Chapter 7 Conclusions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../con/con.html">结束-感想</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../personal_intro.html">译者介绍</a></li>
 </ul>
 
             
@@ -162,24 +179,30 @@
 <p>我们首先在第4.1节中检查了现有模型的错误情况，并得出结论，尽管它们的平均准确率很高，但在“简单”或“琐碎”的情况下，它们仍然会失败。</p>
 <p>正如我们前面所讨论的，最近阅读理解的成功归功于大规模数据集的创建和神经阅读理解模型的开发。在未来，我们相信这两个组成部分仍然同样重要。我们将在4.2节和4.3节分别讨论数据集和模型的未来工作。现有的数据集和模型中还缺少什么？我们该怎么做呢？</p>
 <p>最后，我们在第4.4节中回顾了这一领域的几个重要研究问题。</p>
-<p>4.1 Is SQuAD Solved Yet？</p>
+<div class="section" id="is-squad-solved-yet">
+<h2>4.1 Is SQuAD Solved Yet？<a class="headerlink" href="#is-squad-solved-yet" title="永久链接至标题">¶</a></h2>
 <p>尽管我们已经在SQUAD数据机上达到了超人的性能，这能说明我们的阅读理解模型已经能够解决所有的SQUAD例子或者其他同等难度的例子么？</p>
 <p>图4.1展示了我们在3.2节中描述的STANFORD ATTENTIVE READER模型的一些失败案例。正如我们所看到的，该模型完美地预测了所有这些例子的答案类型：它预测了问题的一个数字，即……吗？人口是多少……吗？哪支球队赢得了超级碗50强？然而，该模型无法理解文本中表达的微妙之处，也无法区分候选答案。细节如下，</p>
-<p>.    （a）  The number <em>2</em>*，<em><em>400</em> modifies <em>professors</em></em>，* <em>lecturers</em>*，* <em>and instructors</em> while <em>7</em>*，*<em>200</em> modi- fies <em>undergraduates</em>. However， the system failed to identify that and we believe that linguistic structures （e.g.， syntactic parsing） can help resolve this case.</p>
-<p>.    （b）  Both teams <em>Denver Broncos</em> and <em>Carolina Panthers</em> are modified by the word <em>cham- pion</em>， but the system failed to infer that “X defeated Y” so “X won”.</p>
-<p>.    （c）  The system predicted <em>100</em>*，*<em>000</em> probably because it is closer to the word <em>population</em>. However， to answer the question correctly， the system has to identify that <em>3.7 million</em> is the population of <em>Los Angles</em>， and <em>1.3 million</em> is the population of <em>San Diego</em> and compare the two numbers and infer that <em>1.3 million</em> is the answer because it is <em>second largest</em>. This is a difficult example and probably beyond the scope of all the existing systems.</p>
+<p>（a）  The number <em>2</em>*，<em><em>400</em> modifies <em>professors</em></em>，* <em>lecturers</em>*，* <em>and instructors</em> while <em>7</em>*，*<em>200</em> modi- fies <em>undergraduates</em>. However， the system failed to identify that and we believe that linguistic structures （e.g.， syntactic parsing） can help resolve this case.</p>
+<p>（b）  Both teams <em>Denver Broncos</em> and <em>Carolina Panthers</em> are modified by the word <em>cham- pion</em>， but the system failed to infer that “X defeated Y” so “X won”.</p>
+<p>（c）  The system predicted <em>100</em>*，*<em>000</em> probably because it is closer to the word <em>population</em>. However， to answer the question correctly， the system has to identify that <em>3.7 million</em> is the population of <em>Los Angles</em>， and <em>1.3 million</em> is the population of <em>San Diego</em> and compare the two numbers and infer that <em>1.3 million</em> is the answer because it is <em>second largest</em>. This is a difficult example and probably beyond the scope of all the existing systems.</p>
 <p>我们还仔细研究了迄今为止最佳阵容模型的预测，7个BERT模型的集合（Devlin et al.， 2018）。如图4.2所示，我们可以看到这个强大的模型仍然会犯一些人类几乎不会犯的简单错误。可以推测，这些模型一直在进行非常复杂的文本匹配，但它们仍然难以理解实体和文本中所表达的事件之间的内在结构。</p>
 <p>最后，Jia和Liang（2017）发现，如果我们在文章末尾添加一个让人分心的句子（见图4.3中的例子），目前阅读理解系统的平均性能将会从75.4%大幅下降到36.4%。这些让人分心的时态与问题有词汇重叠，但实际上并不与正确答案相矛盾，也不会误导人类的理解。如果允许分散注意力的句子添加不符合语法的单词序列，那么效果会更糟。这些结果表明，1）目前的模型在很大程度上依赖于文章和问题之间的词汇线索。这就是为什么分散注意力的句子会如此具有破坏性；2）虽然模型在原始开发集上取得了很高的精度，但对于对抗性的例子，它们的鲁棒性并不强。这是标准监督学习范式的一个关键问题，它使得现有的模型难以在现实世界中部署。我们将在第4.3节中更多地讨论鲁棒性的特性。</p>
 <p>综上所述，我们认为，目前的模型虽然在SQUAD数据集上已经获得了很高的精度，但目前的模型只关注文本的表层信息，在理解的（稍微）更深层次上仍然存在简单的错误。另一方面，高准确度也表明，大多数球队的例子是相当容易的，需要很少的理解。有一些困难的例子需要在SQUAD中进行复杂的推理（例如，图4.1中的（c）），但是由于它们的稀缺性，它们的准确性并没有真正反映在平均度量中。此外，高accu- racies只有在训练和发展来自同一分布时才成立，当它们不同时仍然是一个严重的问题。在接下来的两部分中，我们将讨论创建更具挑战性的数据集和构建更有效模型的可能性。</p>
-<p>4.2 Future Work： Datasets</p>
+<p><img alt="http://ww4.sinaimg.cn/large/006tNc79ly1g5er0fui0lj30js0q844y.jpg" src="http://ww4.sinaimg.cn/large/006tNc79ly1g5er0fui0lj30js0q844y.jpg" />image-20190727220644149</p>
+</div>
+<div class="section" id="future-work-datasets">
+<h2>4.2 Future Work： Datasets<a class="headerlink" href="#future-work-datasets" title="永久链接至标题">¶</a></h2>
 <p>我们主要关注的是CNN/DAILY MAIL和SQUAD，并证明了以下两点：</p>
 <p>1、神经模型在这两种数据集上都能够实现比人类更好的效果或者达到目前的上限；</p>
 <p>2、虽然这些数据集非常有用，但大多数例子都很简单，还不需要太多推理。</p>
 <p>这些数据集中还缺少哪些需要的属性？接下来我们应该处理什么样的数据集？如何收集更好的数据集？</p>
 <p>我们认为像SQUAD这样的数据集主要有以下的局限性：</p>
-<p>l   这些问题是根据这篇文章提出的。也就是说，如果一个提问者在提问时看着这篇文章，他们很可能会模仿句子结构，重复使用相同的单词。这减轻了回答问题的难度，因为许多问题的单词与文章中的单词重叠。</p>
-<p>l   它只允许文章中一个跨度可以回答的问题。这不仅意味着所有的问题都是可回答的，而且还排除了许多可能提出的问题，如是/否、计算问题。正如我们之前所讨论的，大部分的问题都是真实的问题，并且答案通常都很简短（平均3.1个token）。因此，数据集中也很少有为什么（因果关系）和如何（过程）的问题。</p>
-<p>l   大多数问题的答案只有一个句子，不需要多句推理。Rajpurkar等（2016）估计只有13.6%的例子需要多句推理。其中，我们认为大多数的案例都是指代消解，可以通过一个指代消解系统来解决。</p>
+<ol class="simple">
+<li>这些问题是根据这篇文章提出的。也就是说，如果一个提问者在提问时看着这篇文章，他们很可能会模仿句子结构，重复使用相同的单词。这减轻了回答问题的难度，因为许多问题的单词与文章中的单词重叠。</li>
+<li>它只允许文章中一个跨度可以回答的问题。这不仅意味着所有的问题都是可回答的，而且还排除了许多可能提出的问题，如是/否、计算问题。正如我们之前所讨论的，大部分的问题都是真实的问题，并且答案通常都很简短（平均3.1个token）。因此，数据集中也很少有为什么（因果关系）和如何（过程）的问题。</li>
+<li>大多数问题的答案只有一个句子，不需要多句推理。Rajpurkar等（2016）估计只有13.6%的例子需要多句推理。其中，我们认为大多数的案例都是指代消解，可以通过一个指代消解系统来解决。</li>
+</ol>
 <p>为了解决这些局限性，最近出现了一些新的数据集。他们和SQUAD有类似的地方，但以不同的方式构建。表4.1给出了一些代表性数据集的概述。正如我们所看到的，这些数据集具有相似的数量级（范围从33k到529k的训练示例），并且在最先进的性能和人类性能之间仍然存在差距（尽管有些差距比其他差距更大）。下面，我们将详细描述这些数据集，并讨论它们如何解决上述限制及其优缺点：</p>
 <p>TriviaQA （Joshi等，2017）。这个数据集的关键思想是在构建相应的段落之前收集问题/答案对。更具体地说，他们从琐事和测验联盟网站上收集了95k对问答对，并收集了包含答案的虚拟证据，这些答案要么来自网络搜索结果，要么来自与问题中提到的实体对应的维基百科页面。结果，他们总共收集了650k（短文，问题，答案）的三倍。该范式有效地解决了问题依赖于文章的问题，并且更容易廉价地构建大型数据集。值得注意的是，该数据集中使用的段落大多是长文档（平均文档长度为2895个单词，是SQUAD的20倍），并且对现有模型的可拓展性也提出了挑战。然而，它有一个类似于CNN/DAILY MAIL数据集的问题——由于数据集是启发式地整理的，因此不能保证文章真正提供了问题的答案，这影响了训练数据的质量。</p>
 <p>RACE （Lai等，2017）。人的标准化测试是评价汉语阅读理解能力的一种有效方法。RACE是一个多选题数据集，收集了12-18岁中国中学生和高中生的英语考试数据。所有的问题和答案选项都是由专家创建的。因此，该数据集比大多数现有数据集更加困难，据估计，26%的问题需要多句推理。最先进的性能只是59%（每个问题有4个候选答案）。</p>
@@ -187,36 +210,53 @@
 <p>SQUAD2.0 （Rajpurkar等，2018）。SQUAD2.0提出在原有SQUAD数据集中增加53，775个反面例子。这些问题不能从文章中得到答案，但是看起来和积极的问题很相似（相关的，文章中有一个可信的答案）。为好地处理数据集，系统不仅需要回答问题，还需要确定段落中什么时候不支持回答，并避免回答。这是实际应用中的一个重要方面，但在以前的数据集中被忽略了。</p>
 <p>HotpotQA （Yang et al.， 2018）。该数据集旨在构造需要多个支持文档才能回答的问题。为了达到这个目的，众包工作者被要求根据维基百科的两个相关段落提问（一篇文章的第一段到另一篇文章有一个超链接）。它还提供了一种新的仿真陈述比较问题，系统需要在一些共享属性上比较两个实体。该数据集由两个评估设置组成——一个称为干扰设置，其中每个问题都提供10个段落，包括用于构建问题的两个段落和从Wikipedia检索到的8个干扰段落；第二个设置是使用完整的Wikipedia来回答这个问题。</p>
 <p>与SQUAD相比，这些数据集要么需要更复杂的跨时态或文档推理，要么需要处理更长的文档，要么需要生成自由形式的答案而不是提取单个跨度，要么需要预测文章中何时没有答案。它们带来了新的挑战，许多挑战仍然超出了现有模型的范围。我们相信这些数据集将在未来进一步激发一系列的建模创新。当我们的模型达到下一个性能级别后，我们将需要开始构建更加困难的数据集来解决。</p>
-<p>4.3 Future Work： Models</p>
+</div>
+<div class="section" id="future-work-models">
+<h2>4.3 Future Work： Models<a class="headerlink" href="#future-work-models" title="永久链接至标题">¶</a></h2>
 <p>接下来，我们转向未来工作模型的研究方向。我们首先描述了阅读理解模型的期望。现有的大部分工作只注重准确性，给定一个标准train/dev/test数据集分割，主要目标是得到最好的测试准确性分数。但是，我们认为还有其他重要的方面被忽视了，我们需要工作在未来，包括速度和可扩展性、鲁棒性和可解释性。最后，我们讨论了在目前的模型中还缺少哪些重要的元素，以解决更多的阅读理解难题。</p>
-<p>4.3.1 Desiderata</p>
+<div class="section" id="desiderata">
+<h3>4.3.1 Desiderata<a class="headerlink" href="#desiderata" title="永久链接至标题">¶</a></h3>
 <p>除了准确性（在标准数据集上获得更好的性能分数），以下的需求对未来的工作也非常重要：</p>
 <p>Speed and Scalability。如何构建更快的模型（用于训练和推理），以及如何扩展到更长的文档，这些都是需要研究的重要方向。建立更快的训练模型可以降低实验的周转时间，还可以使我们在更大的数据集上进行训练。在实际应用中部署模型时，为推理构建更快的模型非常有用。此外，用RNN编码一个很长的文档（例如TRIVIAQA）甚至是一本书（例如NARRATIVEQA）都是不现实的，这仍然是一个严峻的挑战。例如，TRIVIAQA的平均文档长度为2，895个token，为了可伸缩性，作者将文档缩减为前800个token。NARRATIVEQA的平均文档长度为62，528个token，作者必须首先使用IR系统从故事中检索少量相关段落。</p>
 <p>现有的对这些问题的解决方法如下：</p>
-<p>l   如我们在3.4.3节中讨论的，用transformer（Vaswani et al.， 2017）或更轻的non-recurrent模型（Lei et al.， 2018）取代LSTMs。</p>
-<p>l   训练学习跳过部分文档的模型，这样他们就不需要阅读所有内容。这些模型可以运行得更快，同时仍然保持类似的性能。该领域的代表作品有Yu等（2017）和Seo等（2018）。</p>
-<p>l   优化算法的选择也会极大地影响收敛速度。多gpu训练和硬件性能也是需要考虑的重要方面，但超出了本文的研究范围。Coleman等人（2017）提供了一个基准（https：//dawn.cs.stanford.edu/benchmark/），用于测量端到端训练和推理时间，以实现对包括SQUAD在内的广泛任务的最先进的准确性水平。</p>
+<ol class="simple">
+<li>如我们在3.4.3节中讨论的，用transformer（Vaswani et al.， 2017）或更轻的non-recurrent模型（Lei et al.， 2018）取代LSTMs。</li>
+<li>训练学习跳过部分文档的模型，这样他们就不需要阅读所有内容。这些模型可以运行得更快，同时仍然保持类似的性能。该领域的代表作品有Yu等（2017）和Seo等（2018）。</li>
+<li>优化算法的选择也会极大地影响收敛速度。多gpu训练和硬件性能也是需要考虑的重要方面，但超出了本文的研究范围。Coleman等人（2017）提供了一个基准（https：//dawn.cs.stanford.edu/benchmark/），用于测量端到端训练和推理时间，以实现对包括SQUAD在内的广泛任务的最先进的准确性水平。</li>
+</ol>
 <p>Robustness。我们在4.1节中讨论了现有的模型对于对抗性例子来说是非常脆弱的，这将成为我们在现实世界中部署这些模型时所面临的一个严重问题。此外，目前的大多数工作都遵循标准范例：对一个数据集的分割进行培训和评估。众所周知，如果我们在一个数据集上训练我们的模型，并在另一个数据集上进行评估，由于它们的文本来源和构造方法不同，性能将显著下降。对于今后的工作，我们需要考虑：</p>
-<p>l   如何创造更好的对抗训练示例并且将它们加入到训练过程中</p>
-<p>l   对迁移学习和多任务学习进行更多深入的研究，建立跨数据集的高性能模型。</p>
-<p>l   我们可能需要打破监督学习的标准范式，并考虑如何创建更好的方法来评估我们当前的模型，以便构建更健壮的模型。</p>
+<ol class="simple">
+<li>如何创造更好的对抗训练示例并且将它们加入到训练过程中</li>
+<li>对迁移学习和多任务学习进行更多深入的研究，建立跨数据集的高性能模型。</li>
+<li>我们可能需要打破监督学习的标准范式，并考虑如何创建更好的方法来评估我们当前的模型，以便构建更健壮的模型。</li>
+</ol>
 <p>Interpretability。最后一个重要的方面是可解释性，在目前的系统中，可解释性一直是被忽略的。我们未来的系统不仅应该能够提供最终的答案，而且还应该提供预测背后的理由，这样用户就可以决定是否可以信任输出并利用它们。神经网络尤其臭名昭著的一个事实是，端到端训练范式使这些模型像一个黑匣子，很难解释它们的预测。如果我们想将这些系统应用到医疗或法律领域，这一点尤其重要。</p>
 <p>可解释性可以有不同的定义。在我们的背景下，我们认为有几种方法可以解决这个问题：</p>
-<p>l   最简单的方法是要求模型学会从文档中提取输入片段作为支持证据。这在以前（e.g.， （Lei et al.， 2016））对于句子分类问题已有研究，但在阅读理解问题中还没有。</p>
-<p>l   更复杂的方法是，这些模型确实能够生成理论依据。模型需要解释这些部分是如何连接的，并最终得到答案，而不是只突出显示文章中相关的部分。以图4.1 （c）为例，系统需要解释两个城市是最大的两个，以及因为370万大于130万，所以它是第二大城市。我们认为这种需求非常重要，但远远超出了当前模型的范围。</p>
-<p>l   最后，需要考虑的另一个重要方面是，我们可以获得哪些培训资源来达到这种可解释性水平。从最终答案中推断出理论依据是可行的，但相当困难。我们应该考虑收集人类的解释作为未来培训理论的监督（标签）。</p>
-<p>4.3.2 Structures and Modules</p>
+<ol class="simple">
+<li>最简单的方法是要求模型学会从文档中提取输入片段作为支持证据。这在以前（e.g.， （Lei et al.， 2016））对于句子分类问题已有研究，但在阅读理解问题中还没有。</li>
+<li>更复杂的方法是，这些模型确实能够生成理论依据。模型需要解释这些部分是如何连接的，并最终得到答案，而不是只突出显示文章中相关的部分。以图4.1 （c）为例，系统需要解释两个城市是最大的两个，以及因为370万大于130万，所以它是第二大城市。我们认为这种需求非常重要，但远远超出了当前模型的范围。</li>
+<li>最后，需要考虑的另一个重要方面是，我们可以获得哪些培训资源来达到这种可解释性水平。从最终答案中推断出理论依据是可行的，但相当困难。我们应该考虑收集人类的解释作为未来培训理论的监督（标签）。</li>
+</ol>
+</div>
+<div class="section" id="structures-and-modules">
+<h3>4.3.2 Structures and Modules<a class="headerlink" href="#structures-and-modules" title="永久链接至标题">¶</a></h3>
 <p>在这个章节，我们会讨论如果我们想要解决更多困难的阅读理解问题的话，目前模型中缺失的元素。</p>
 <p>首先，当前的模型要么建立在序列模型的基础上，要么对称地处理所有单词对（例如TRANSFORMER），并且忽略了语言的固有结构。一方面，这迫使我们的模型从头开始学习所有相关的语言信息，这使得我们的模型的学习更加困难。另一方面，NLP社区多年来投入了大量精力研究语言表示任务（例如语法解析、指代）并且构建许多语言资源和工具。语言按照单词序列上的层次结构和嵌套结构对意义进行编码。在我们的阅读理解模型中更明确地编码语言结构是否仍然有用？</p>
 <p>Figure 4.4 表明了CORENLP在SQUAD中输出的几个例子。我们相信在合格结构信息会是有意义的：</p>
-<p>\1.        2400是教授的数字修饰符应该可以帮助我们回答<em>What is the total number of professors**，</em> <em>instructors</em>*，* <em>and lecturers at Harvard</em>*？*</p>
-<p>\2.        指代信息，it代表Harvard应该可以帮助回答问题：<em>Starting in what year has Harvard topped the Academic Rankings of World Universities</em>*？*.</p>
+<ol class="simple">
+<li>2400是教授的数字修饰符应该可以帮助我们回答<em>What is the total number of professors**，</em> <em>instructors</em>*，* <em>and lecturers at Harvard</em>*？*</li>
+<li>指代信息，it代表Harvard应该可以帮助回答问题：<em>Starting in what year has Harvard topped the Academic Rankings of World Universities</em>*？*.</li>
+</ol>
 <p>因此，我们认为这些语言知识/结构仍然是对现有模型的有益补充。剩下的我们需要回答的问题是：1）将这些结构合并到序列模型中的最佳方法是什么？2）我们是想将结构建模为潜在变量，还是依赖现成的语言工具？对于后一种情况，当前的工具是否足够好，使模型能够获得更多的好处（而不是遭受噪声）？我们能进一步提高这些代表任务的性能吗？</p>
 <p>我们认为，大多数现有模型仍然缺少的另一个方面是模块（modules）。阅读理解的任务本质上是非常复杂的，不同类型的例子需要不同类型的推理能力。如果我们想通过一个巨大的神经网络来学习所有的东西，这仍然是一个巨大的挑战（这让人想起为什么提出注意力机制，因为我们不想把一个句子或一段话的意思压缩成一个向量!）我们相信，如果我们想达到更深层次的阅读理解，我们未来的模型将更加结构化，模块化，解决一个综合任务可以分解成许多子问题，我们可以单独解决每一个规模较小的子问题（例如，每个推理类型）并组合它们。</p>
 <p>modules的思想以前已经在神经模块网络（NMN）中实现过（Andreas et al.， 2016）。它们首先对问题进行依赖解析，然后根据解析结构将回答问题分解为几个“模块”。他们在视觉问答（VQA）任务中使用的一个例子是：一个问题“鸟是什么颜色的？”可以分解为两个模块。一个模块用于检测给定图像中的鸟，另一个模块用于检测发现区域（鸟）的颜色。我们相信这种方法有望回答诸如加州第二大城市的人口是多少之类的问题。（图4.1 （c））。然而，迄今为止，NMN只在视觉问答或小知识库问题上进行了研究，由于语言变异和问题类型的灵活性，将其应用于阅读理解问题可能更具挑战性。</p>
-<p>4.4 Research Questions</p>
+</div>
+</div>
+<div class="section" id="research-questions">
+<h2>4.4 Research Questions<a class="headerlink" href="#research-questions" title="永久链接至标题">¶</a></h2>
 <p>在最后一个小节中，我们讨论一些这个领域的中心研究问题，这些依然是open的，并且等待在未来被回答。</p>
-<p>4.4.1 How to Measure Progress？</p>
+<div class="section" id="how-to-measure-progress">
+<h3>4.4.1 How to Measure Progress？<a class="headerlink" href="#how-to-measure-progress" title="永久链接至标题">¶</a></h3>
 <p>第一个问题是：How can we measure the progress of this field？</p>
 <p>评估指标无疑是衡量我们阅读理解水平进步的清晰指标。这是否意味着我们在阅读理解上取得了真正的进步？我们如何判断一个基准上的一些进展是否可以推广到其他基准上？如果模型A在一个数据集上比模型B工作得更好，而模型B在另一个数据集上工作得更好呢？如何判断这些计算机系统与真正的人类阅读理解水平之间的差距？</p>
 <p>一方面，我们认为参加人的标准化考试可以作为评价机器阅读理解系统性能的一个好策略。这些问题通常是精心策划和设计的，以测试人类阅读理解能力的不同水平。在构建自然语言理解系统时，使计算机系统与人类测量系统保持一致是一种正确的方法。</p>
@@ -224,15 +264,21 @@
 <p>更重要的是，我们需要更好地理解我们现有的数据集：描述它们的质量和回答问题所需的技能。这将是构建更具挑战性的数据集和分析模型行为的重要一步。Sugawara等人（2017）在分析Chen et al.（2016）的CNN/DAILY MAIL例子的基础上，尝试将阅读理解技能分为两个不同的部分：前提技能和可读性。前提技能测量不同类型的推理和回答问题所需的知识，并定义了13个技能：对象跟踪、数学推理、指代解析、逻辑推理、类比、因果关系、时空关系、省略、搭桥、精化、元知识、示意性从句关系和标点符号。可读性度量“文本处理的易用性”，并使用了广泛的语言特性/人类可读性度量。作者的结论是，这两个集合是弱相关的，从易于阅读的上下文中设计难的问题是可能的。这些研究表明，我们可以分别基于这些属性构建数据集和开发模型。</p>
 <p>此外，Sugawara等人（2018）设计了一些简单的过滤启发式算法，并将许多现有数据集中的例子划分为一个硬子集和一个简单子集，这是基于1）是否可以只用头几个单词来回答问题；2）答案是否包含在文章中最相似的句子中。他们发现，与整个数据集相比，硬子集的基线性能显著下降。此外，Kaushik和Lipton（2018）使用仅传递或仅提问的信息分析了现有模型的性能，发现这些模型有时可以工作得惊人地好，因此在一些现有数据集中存在注释构件。</p>
 <p>综上所述，我们认为，如果我们想在今后的阅读理解中取得平稳的进步，我们必须首先回答这些关于例题难度的基本问题。了解数据集需要什么，我们当前的系统能做什么和不能做什么，这将帮助我们识别我们面临的挑战，并衡量进展。</p>
-<p>4.4.2 Representations vs. Architecture： Which is More Important？</p>
+</div>
+<div class="section" id="representations-vs-architecture-which-is-more-important">
+<h3>4.4.2 Representations vs. Architecture： Which is More Important？<a class="headerlink" href="#representations-vs-architecture-which-is-more-important" title="永久链接至标题">¶</a></h3>
 <p>第二个重要的问题是理解表示和架构在对阅读理解模型性能影响上的角色。自SQUAD建立以来，最近出现了一种增加神经结构复杂性的趋势。特别是，人们提出了越来越复杂的注意力机制来捕捉文章和问题之间的相似性（第3.4.2节）。然而，最近的研究（Radford et al.， 2018；Devlin et al .， 2018）提出，如果我们能在大型文本语料库上预训练深度语言模型，一个拼接问题和篇章的简单模型，并且不需要在这两者（问题和篇章）之间建立任何直接互动，都可以在SQUAD和RACE这辆的阅读理解数据集上表现十分良好。 （见表3.4和表4.1）。</p>
 <p>如图4.5所示，第一个类的模型（左）基于顶层的在未标记文本上预训练的词嵌入（每个单词类型有一个向量表示）构建，而所有其余的参数（包括所有的权重来计算各种注意力功能）需要从有限的训练数据学习。第二类模型（右）使模型体系结构非常简单，它只将问题和篇章建模为单个序列。对整个模型进行预训练，保留所有参数。只增加了几个新的参数（如预测SQUAD起始和结束位置的参数），其他参数将在阅读理解任务的训练集上进行微调。</p>
 <p>我们认为这两类模型表明了两个极端。一方面，它确实展示了非监督表示的不可思议的力量。由于我们有一个从大量文本中预先训练的强大的语言模型，该模型已经编码了大量关于语言的属性，而一个连接篇章和问题的简单模型足以学习两者之间的依赖关系。另一方面，当只给出单词嵌入时，似乎对文章和问题之间的交互进行建模（或者为模型提供更多的先验知识）会有所帮助。在未来，我们怀疑我们需要将两者结合起来，像BERT这样的模型太粗糙，无法处理需要复杂推理的例子。</p>
-<p>4.4.3 How Many Training Examples Are Needed？</p>
+</div>
+<div class="section" id="how-many-training-examples-are-needed">
+<h3>4.4.3 How Many Training Examples Are Needed？<a class="headerlink" href="#how-many-training-examples-are-needed" title="永久链接至标题">¶</a></h3>
 <p>第三个问题是实际需要多少个训练实例？我们已经多次讨论过神经阅读理解的成功是由大规模的数据集驱动的。我们一直在积极研究的所有数据集都包含至少50，000个示例。我们能否始终保持数据的丰富性，并进一步提高系统的性能？是否有可能训练一个只有几百个注释例子的神经阅读理解模型？</p>
 <p>我们认为目前还没有一个明确的答案。一方面，有明确的证据表明，拥有更多的数据会有所帮助。Bajgar et al.（2016）证明，使用相同的模型，膨胀通过古登堡计划（project Gutenberg）从书籍中构建的完形填空（cloze-style）的训练数据可以在CHILDREN BOOK TEST（CBT）数据集合（Hill et al.， 2016）。我们之前讨论过使用数据增强技术（Yu et al.2018）或使用TRIVIAQA增强训练数据可以帮助提高在SQUAD上的性能（# training examples = 87，599）。</p>
 <p>另一方面，预训练（语言）模型（Radford等，2018；Devlin et al.， 2018）可以帮助我们减少对大规模数据集的依赖。在这些模型中，大部分参数已经在大量的未标记数据上进行了预训练，并且只会在训练过程中进行微调。</p>
 <p>在未来，我们应该鼓励更多在非监督学习和迁移学习上的研究。利用非标注数据（例如text）或者别的廉价的资源或者监督（例如CNN/DAILY MAIL这样的数据集）会将我们从收集昂贵的标注数据中解放出来。我们也应该寻找更好和更加便宜的方式来收集监督数据。</p>
+</div>
+</div>
 </div>
 
 

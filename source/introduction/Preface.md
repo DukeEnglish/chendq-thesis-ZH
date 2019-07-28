@@ -1,6 +1,6 @@
 # Preface 译者 注
 
-陈丹琦博士的个人主页：https://www.cs.princeton.edu/~danqic/
+关于这片论文的中文翻译在这里：https://chendq-thesis-zh.readthedocs.io/en/latest/
 
 我一直觉得阅读一本优秀的博士毕业论文是最快了解一个领域的方式。论文中会介绍它的研究的前因后果以及最近和未来的发展趋势，并且，这里面会引用大量的参考文献，这都是宝贵的经过整理的学习资料。
 
@@ -21,10 +21,6 @@ NLP领域逐渐进入人们的视野，从word2vec到BERT再到后来提出的�
 本文仅供学习交流所用，一切权利由原作者及单位保留，译者不承担法律责任。
 
   
-
-关于这片论文的中文翻译在这里：
-
-https://chendq-thesis-zh.readthedocs.io/en/latest/
 
 原文地址：
 
