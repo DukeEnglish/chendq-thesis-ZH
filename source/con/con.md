@@ -26,3 +26,6 @@ https://github.com/DukeEnglish/cs224n_learning_note
 
 Duke Lee
 
+另外，感谢以下公众号/社区的转发，希望我们可以一起学习一起进步：
+DataFun：https://mp.weixin.qq.com/s/2gUhlgIaL_Qi0M8iPbWMkA
+AINLP：https://mp.weixin.qq.com/s/3c1SMqHroyy3yXKW4cvITA
