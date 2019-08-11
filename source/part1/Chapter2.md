@@ -125,7 +125,7 @@ June 2016. The data points are taken from the leaderboard at http://stanford-qa.
 
 4. 自由形式回答类型（Free-form answer）：最后一种类型允许答案是任何形式的文本（即，任意长度的单词序列），形式上：a∈V。
 
-表2.1给出了每个类型的问题所属典型数据集的示例：CNN/DAILY MAIL （Hermann et al.， 2015） （cloze style）， MCTEST （Richardson et al.， 2013） （multiple choice）， SQUAD （Rajpurkar et al.， 2016） （span prediction） and NARRA- TIVEQA （Kocˇisky` et al.， 2018） （free-form answer）. 
+表2.1给出了每个类型的问题所属典型数据集的示例：CNN/DAILY MAIL （Hermann et al.， 2015） （cloze style）， MCTEST （Richardson et al.， 2013） （multiple choice）， SQUAD （Rajpurkar et al.， 2016） （span prediction） and NARRA- TIVEQA （Kocˇisky` et al.， 2018） （free-form answer）.
 
 
 

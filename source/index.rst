@@ -19,6 +19,8 @@ https://www.cs.princeton.edu/~danqic/papers/thesis.pdf
 
 2018年12月
 
+:math:`\sigma_{1}`
+
 .. toctree::
    :maxdepth: 2
 

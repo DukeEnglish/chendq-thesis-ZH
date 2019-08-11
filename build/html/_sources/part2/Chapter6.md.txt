@@ -102,15 +102,15 @@ COQA的第三个目标是支持构建性能可靠的跨领域QA系统。目前�
 
 会话模型的基本目标是根据会话历史预测下一个话语。序列到序列（seq2seq）模型（Sutskever et al.， 2014）在生成会话响应方面显示出了良好的结果（Vinyals和Le， 2015；李等，2016；张等，2018）。由于他们的成功，我们使用了一个标准的序列到序列模型，其中包含一个生成答案的注意机制。我们附加了段落、会话历史（最后n轮的问题/答案对）和当前的问题，p <q> qi−n <a> ai−n…<q> qi−1 <a> ai−1 <q> qi，并将其输入一个双向LSTM编码器，其中<q>和<a>是用作分隔符的特殊令牌。然后，我们使用LSTM解码器生成答案，该解码器负责处理编码器的状态。
 
-此外，由于答案很可能出现在原文中，我们在解码器中采用了一种复制机制，用于总结任务（Gu et al.， 2016；参见et al.， 2017），它允许（可选地）从文章和对话历史中复制一个单词。我们将这个模型称为点-发生器网络（参见et al.， 2017）， PGNET。图6.8展示了PGNET的完整模型。正式，我们表示编码器隐藏vec - {h̃我}职权范围，解码器状态在步伐t ht和xt的输入向量，注重功能与计算机􏰆ted基于{h̃我}和htαi方程（3.13）和上下文向量计算c =我αih̃我方程（3.14）。
+此外，由于答案很可能出现在原文中，我们在解码器中采用了一种复制机制，用于总结任务（Gu et al.， 2016；See et al.， 2017），它允许（可选地）从文章和对话历史中复制一个单词。我们将这个模型称为Pointer-Generator网络（See et al.， 2017）， PGNET。图6.8展示了PGNET的完整模型。正式说来，我们用 {h̃i}表示编码器隐藏向量，ht表示在timestep t时候的解码器状态，以及Xt作为输入向量，注意力方程给予 {h̃i}、ht和α来计算（equation 3.13）。上下文向量用公式3.14计算：$c = \sum_i\alpha_ih̃_i$
 
 对于复制机制，它首先计算生成概率pgen∈[0，1]，pgen∈[0，1]控制从完整词汇表V（而不是复制一个单词）生成单词的概率：
 
-$$ p_{gen} = σ 􏰄(w_{(c)}^T􏰉c + w{(x)}^T􏰉x_t + w{(h)}^T􏰉h_t + b􏰅 ). $$
+$$ p_{gen} = σ 􏰄(w_{(c)}^T􏰉c + w{(x)}^T􏰉x_t + w{(h)}^T􏰉h_t + b􏰅 ). $$   (6.1)
 
 生成单词w的最后概率分布计算如下：
 
-$$P(w)=p_{gen}P_{vocab}(w)+(1−p_{gen}) 􏰁\sum_{i:w_i=w} \alpha_i$$
+$$P(w)=p_{gen}P_{vocab}(w)+(1−p_{gen}) 􏰁\sum_{i:w_i=w} \alpha_i$$  (6.2)
 
 where Pvocab（w） is the original probability distribution （computed based on c and ht） and {wi} refers to all the words in the passage and the dialogue history. For more details， we refer readers to （See et al.， 2017）. 
 
